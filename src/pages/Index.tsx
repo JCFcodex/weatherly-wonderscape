@@ -28,8 +28,8 @@ const Index = () => {
   };
 
   return (
-    <ThemeProvider defaultTheme="dark" attribute="class">
-      <div className="min-h-screen bg-[#1C1C1E] dark:bg-[#1C1C1E] font-['Outfit'] overflow-hidden flex flex-col">
+    <ThemeProvider enableSystem={true} attribute="class">
+      <div className="min-h-screen bg-white dark:bg-[#1C1C1E] font-['Outfit'] overflow-hidden flex flex-col">
         <Header />
         <main className="flex-1 px-4 py-6">
           <div className="max-w-[1200px] mx-auto">
