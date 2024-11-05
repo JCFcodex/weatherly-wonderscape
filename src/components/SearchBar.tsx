@@ -9,13 +9,13 @@ interface SearchBarProps {
 
 export const SearchBar = ({ onSearch }: SearchBarProps) => {
   const [isFocused, setIsFocused] = useState(false);
+  const [inputValue, setInputValue] = useState("");
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-    const city = formData.get("city") as string;
-    if (city.trim()) {
-      onSearch(city.trim());
+    if (inputValue.trim()) {
+      onSearch(inputValue.trim());
+      setInputValue(""); // Clear input after search
     }
   };
 
@@ -28,7 +28,8 @@ export const SearchBar = ({ onSearch }: SearchBarProps) => {
       transition={{ duration: 0.3 }}
     >
       <Input
-        name="city"
+        value={inputValue}
+        onChange={(e) => setInputValue(e.target.value)}
         placeholder="Search location..."
         className={`pl-10 h-12 backdrop-blur-xl rounded-2xl placeholder:text-white/50 transition-all duration-200 ${
           isFocused 
