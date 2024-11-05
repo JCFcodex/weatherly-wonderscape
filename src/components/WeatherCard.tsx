@@ -14,9 +14,9 @@ export const WeatherCard = ({ weather }: WeatherCardProps) => {
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.3 }}
     >
-      <Card className="w-full p-6 bg-[#EBEBEB]/80 backdrop-blur-lg">
+      <Card className="w-full p-6 bg-white/10 backdrop-blur-lg">
         <div className="text-center space-y-4">
-          <h2 className="text-xl font-medium text-[#333333]">
+          <h2 className="text-2xl font-medium text-white">
             {weather.location.name}
           </h2>
           <div className="flex justify-center items-center space-x-4">
@@ -24,29 +24,29 @@ export const WeatherCard = ({ weather }: WeatherCardProps) => {
               condition={weather.current.condition.text}
               className="w-24 h-24"
             />
-            <span className="text-6xl font-light text-[#333333]">
+            <span className="text-7xl font-light text-white">
               {Math.round(weather.current.temp_c)}°
             </span>
           </div>
-          <p className="text-[#ADADAD]">{weather.current.condition.text}</p>
+          <p className="text-white/70">{weather.current.condition.text}</p>
         </div>
 
         <div className="grid grid-cols-3 gap-4 mt-8">
           <div className="text-center">
-            <p className="text-[#ADADAD] text-sm">Precipitation</p>
-            <p className="text-[#333333] font-medium">
+            <p className="text-white/50 text-sm">Precipitation</p>
+            <p className="text-white font-medium">
               {weather.current.precip_mm}%
             </p>
           </div>
           <div className="text-center">
-            <p className="text-[#ADADAD] text-sm">Wind</p>
-            <p className="text-[#333333] font-medium">
+            <p className="text-white/50 text-sm">Wind</p>
+            <p className="text-white font-medium">
               {Math.round(weather.current.wind_kph)} km/h
             </p>
           </div>
           <div className="text-center">
-            <p className="text-[#ADADAD] text-sm">Humidity</p>
-            <p className="text-[#333333] font-medium">
+            <p className="text-white/50 text-sm">Humidity</p>
+            <p className="text-white font-medium">
               {weather.current.humidity}%
             </p>
           </div>

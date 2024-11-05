@@ -21,7 +21,7 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#4965F2] to-[#333333] p-4 sm:p-6 md:p-8 font-['SF_Pro']">
+    <div className="min-h-screen bg-gradient-to-br from-[#4965F2] via-[#6B85FF] to-[#333333] p-4 sm:p-6 md:p-8 font-['Outfit']">
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
