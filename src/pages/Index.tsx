@@ -2,8 +2,11 @@ import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { SearchBar } from "@/components/SearchBar";
 import { WeatherCard } from "@/components/WeatherCard";
+import { WeatherForecast } from "@/components/WeatherForecast";
+import { OtherCities } from "@/components/OtherCities";
 import { fetchWeatherData } from "@/services/weatherApi";
-import { Skeleton } from "@/components/ui/skeleton";
+import { LoadingCard } from "@/components/LoadingCard";
+import { motion } from "framer-motion";
 
 const Index = () => {
   const [city, setCity] = useState("London");
@@ -18,22 +21,25 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-weather-gradient p-4 sm:p-6 md:p-8">
-      <div className="max-w-4xl mx-auto">
-        <h1 className="text-4xl font-bold text-center mb-8 text-secondary-foreground">
-          Weather Forecast
-        </h1>
-        
+    <div className="min-h-screen bg-gradient-to-b from-[#4965F2] to-[#333333] p-4 sm:p-6 md:p-8 font-['SF_Pro']">
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="max-w-md mx-auto space-y-6"
+      >
         <SearchBar onSearch={handleSearch} />
 
         {isLoading ? (
-          <div className="w-full max-w-md mx-auto">
-            <Skeleton className="h-[500px] w-full rounded-lg" />
-          </div>
+          <LoadingCard />
         ) : weather ? (
-          <WeatherCard weather={weather} />
+          <>
+            <WeatherCard weather={weather} />
+            <WeatherForecast forecast={weather.forecast} />
+            <OtherCities currentCity={city} onCitySelect={setCity} />
+          </>
         ) : null}
-      </div>
+      </motion.div>
     </div>
   );
 };
