@@ -14,7 +14,7 @@ import { Footer } from "@/components/Footer";
 import { ThemeProvider } from "next-themes";
 
 const Index = () => {
-  const [city, setCity] = useState("London");
+  const [city, setCity] = useState("Manila");
 
   const { data: weather, isLoading, isError } = useQuery({
     queryKey: ["weather", city],
