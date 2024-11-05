@@ -5,11 +5,14 @@ import requests
 import os
 import json
 from datetime import datetime, timedelta
+from dotenv import load_dotenv
+
+load_dotenv()
 
 app = Flask(__name__)
 CORS(app)
 
-API_KEY = "95225f90a68140d9bdb120731240511"
+API_KEY = os.getenv('WEATHER_API_KEY' or '95225f90a68140d9bdb120731240511')
 WEATHER_API_URL = "https://api.weatherapi.com/v1/forecast.json"
 
 def init_db():
