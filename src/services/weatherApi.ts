@@ -38,16 +38,21 @@ export const fetchWeatherData = async (city: string): Promise<WeatherData> => {
     const data = await response.json();
     
     if (!response.ok) {
-      toast.error(data.error || 'Failed to fetch weather data');
-      throw new Error(data.error || 'Failed to fetch weather data');
+      if (response.status === 404) {
+        toast.error("City not found. Please enter a valid city name.");
+      } else {
+        toast.error("Unable to fetch weather data. Please try again later.");
+      }
+      throw new Error(data.error || "Failed to fetch weather data");
     }
     
     return data;
   } catch (error) {
     if (error instanceof Error) {
-      toast.error(error.message);
-    } else {
-      toast.error('An unexpected error occurred');
+      console.error("Weather API Error:", error);
+      if (error.message.includes("Failed to fetch")) {
+        toast.error("Network error. Please check your connection.");
+      }
     }
     throw error;
   }

@@ -12,9 +12,10 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 const Index = () => {
   const [city, setCity] = useState("London");
 
-  const { data: weather, isLoading } = useQuery({
+  const { data: weather, isLoading, isError } = useQuery({
     queryKey: ["weather", city],
     queryFn: () => fetchWeatherData(city),
+    retry: false,
   });
 
   const handleSearch = (newCity: string) => {
@@ -22,7 +23,7 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#1C1C1E] px-4 py-6 sm:p-6 md:p-8 font-['Outfit']">
+    <div className="min-h-screen bg-[#1C1C1E] px-4 py-6 sm:p-6 md:p-8 font-['Outfit'] overflow-hidden">
       <div className="max-w-[1200px] mx-auto">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
@@ -37,7 +38,7 @@ const Index = () => {
           <SearchBar onSearch={handleSearch} />
           {isLoading ? (
             <LoadingCard />
-          ) : weather ? (
+          ) : weather && !isError ? (
             <div className="grid lg:grid-cols-12 gap-4 sm:gap-6">
               <div className="lg:col-span-4">
                 <WeatherCard weather={weather} />
