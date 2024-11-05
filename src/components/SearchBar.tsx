@@ -1,12 +1,15 @@
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 import { motion } from "framer-motion";
+import { useState } from "react";
 
 interface SearchBarProps {
   onSearch: (city: string) => void;
 }
 
 export const SearchBar = ({ onSearch }: SearchBarProps) => {
+  const [isFocused, setIsFocused] = useState(false);
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
@@ -19,7 +22,7 @@ export const SearchBar = ({ onSearch }: SearchBarProps) => {
   return (
     <motion.form 
       onSubmit={handleSubmit} 
-      className="relative w-full max-w-md mb-8"
+      className="relative w-full max-w-md mx-auto mb-8"
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
@@ -27,9 +30,17 @@ export const SearchBar = ({ onSearch }: SearchBarProps) => {
       <Input
         name="city"
         placeholder="Search location..."
-        className="pl-10 h-12 bg-[#2C2C2E]/80 backdrop-blur-xl border-white/10 text-white rounded-2xl placeholder:text-white/50 focus:border-white/20 focus:ring-white/20"
+        className={`pl-10 h-12 backdrop-blur-xl rounded-2xl placeholder:text-white/50 transition-all duration-200 ${
+          isFocused 
+            ? "bg-white text-gray-900 border-transparent" 
+            : "bg-[#2C2C2E]/80 text-white border-white/10"
+        }`}
+        onFocus={() => setIsFocused(true)}
+        onBlur={() => setIsFocused(false)}
       />
-      <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/50 w-5 h-5" />
+      <Search className={`absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 transition-colors duration-200 ${
+        isFocused ? "text-gray-500" : "text-white/50"
+      }`} />
     </motion.form>
   );
 };

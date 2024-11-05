@@ -22,7 +22,7 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#1C1C1E] p-4 sm:p-6 md:p-8 font-['Outfit']">
+    <div className="min-h-screen bg-[#1C1C1E] px-4 py-6 sm:p-6 md:p-8 font-['Outfit']">
       <div className="max-w-[1200px] mx-auto">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
@@ -30,21 +30,21 @@ const Index = () => {
           transition={{ duration: 0.5 }}
           className="space-y-6"
         >
-          <div className="flex justify-between items-center">
-            <h1 className="text-white/90 text-2xl font-medium">Weather Dashboard</h1>
-            <span className="text-white/50">2024</span>
+          <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
+            <h1 className="text-white/90 text-2xl sm:text-3xl font-medium">Weather Dashboard</h1>
+            <span className="text-white/50">Real-time Updates</span>
           </div>
           <SearchBar onSearch={handleSearch} />
           {isLoading ? (
             <LoadingCard />
           ) : weather ? (
-            <div className="grid lg:grid-cols-12 gap-6">
+            <div className="grid lg:grid-cols-12 gap-4 sm:gap-6">
               <div className="lg:col-span-4">
                 <WeatherCard weather={weather} />
               </div>
               <div className="lg:col-span-8">
                 <Tabs defaultValue="hourly" className="w-full">
-                  <TabsList className="w-full bg-white/5 border-0">
+                  <TabsList className="w-full bg-white/5 border-0 mb-4">
                     <TabsTrigger 
                       value="hourly" 
                       className="flex-1 data-[state=active]:bg-white/10 data-[state=active]:text-white text-white/70"
@@ -58,10 +58,10 @@ const Index = () => {
                       Weekly Forecast
                     </TabsTrigger>
                   </TabsList>
-                  <TabsContent value="hourly">
+                  <TabsContent value="hourly" className="mt-0">
                     <WeatherChart forecast={weather.forecast} />
                   </TabsContent>
-                  <TabsContent value="weekly">
+                  <TabsContent value="weekly" className="mt-0">
                     <WeatherForecast forecast={weather.forecast} />
                   </TabsContent>
                 </Tabs>

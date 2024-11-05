@@ -33,20 +33,21 @@ export const WeatherChart = ({ forecast }: WeatherChartProps) => {
           
           <div className="h-[200px] sm:h-[300px]">
             <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={data}>
+              <LineChart data={data} margin={{ top: 5, right: 10, left: -20, bottom: 5 }}>
                 <XAxis 
                   dataKey="time" 
                   stroke="#ffffff50"
                   tickFormatter={formatTime}
                   interval="preserveStartEnd"
-                  tick={{ fontSize: 12 }}
+                  tick={{ fontSize: 10, fill: "#ffffff80" }}
                   tickMargin={8}
                 />
                 <YAxis 
                   stroke="#ffffff50"
                   tickFormatter={(value) => `${value}°`}
-                  tick={{ fontSize: 12 }}
+                  tick={{ fontSize: 10, fill: "#ffffff80" }}
                   tickMargin={8}
+                  width={30}
                 />
                 <Tooltip 
                   content={({ active, payload }) => {
