@@ -18,14 +18,13 @@ export const WeatherChart = ({ forecast }: WeatherChartProps) => {
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.3, delay: 0.1 }}
     >
-      <Card className="w-full h-full p-8 bg-[#2C2C2E]/80 backdrop-blur-xl rounded-3xl border-0">
-        <div className="space-y-6">
+      <Card className="w-full h-full p-6 bg-[#2C2C2E]/80 backdrop-blur-xl rounded-3xl border-0">
+        <div className="space-y-4">
           <div>
-            <h3 className="text-xl font-medium text-white/90">Temperature Trend</h3>
-            <p className="text-white/50 text-sm">24-hour forecast</p>
+            <p className="text-white/50 text-sm">24-hour temperature trend</p>
           </div>
           
-          <div className="h-[300px] mt-4">
+          <div className="h-[300px]">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={data}>
                 <XAxis 

@@ -3,9 +3,11 @@ import { useQuery } from "@tanstack/react-query";
 import { SearchBar } from "@/components/SearchBar";
 import { WeatherCard } from "@/components/WeatherCard";
 import { WeatherChart } from "@/components/WeatherChart";
+import { WeatherForecast } from "@/components/WeatherForecast";
 import { fetchWeatherData } from "@/services/weatherApi";
 import { LoadingCard } from "@/components/LoadingCard";
 import { motion } from "framer-motion";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const Index = () => {
   const [city, setCity] = useState("London");
@@ -41,7 +43,28 @@ const Index = () => {
                 <WeatherCard weather={weather} />
               </div>
               <div className="lg:col-span-8">
-                <WeatherChart forecast={weather.forecast} />
+                <Tabs defaultValue="hourly" className="w-full">
+                  <TabsList className="w-full bg-white/5 border-0">
+                    <TabsTrigger 
+                      value="hourly" 
+                      className="flex-1 data-[state=active]:bg-white/10 data-[state=active]:text-white text-white/70"
+                    >
+                      Hourly Forecast
+                    </TabsTrigger>
+                    <TabsTrigger 
+                      value="weekly" 
+                      className="flex-1 data-[state=active]:bg-white/10 data-[state=active]:text-white text-white/70"
+                    >
+                      Weekly Forecast
+                    </TabsTrigger>
+                  </TabsList>
+                  <TabsContent value="hourly">
+                    <WeatherChart forecast={weather.forecast} />
+                  </TabsContent>
+                  <TabsContent value="weekly">
+                    <WeatherForecast forecast={weather.forecast} />
+                  </TabsContent>
+                </Tabs>
               </div>
             </div>
           ) : null}
