@@ -12,37 +12,49 @@ export const WeatherChart = ({ forecast }: WeatherChartProps) => {
     temp: Math.round(hour.temp_c),
   }));
 
+  const formatTime = (hour: number) => {
+    const ampm = hour >= 12 ? 'PM' : 'AM';
+    const formattedHour = hour % 12 || 12;
+    return `${formattedHour}${ampm}`;
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.3, delay: 0.1 }}
+      className="w-full"
     >
-      <Card className="w-full h-full p-6 bg-[#2C2C2E]/80 backdrop-blur-xl rounded-3xl border-0">
-        <div className="space-y-4">
+      <Card className="w-full h-full p-4 sm:p-6 bg-[#2C2C2E]/80 backdrop-blur-xl rounded-3xl border-0">
+        <div className="space-y-3 sm:space-y-4">
           <div>
-            <p className="text-white/50 text-sm">24-hour temperature trend</p>
+            <p className="text-white/50 text-xs sm:text-sm">12-hour temperature trend</p>
           </div>
           
-          <div className="h-[300px]">
+          <div className="h-[200px] sm:h-[300px]">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={data}>
                 <XAxis 
                   dataKey="time" 
                   stroke="#ffffff50"
-                  tickFormatter={(value) => `${value}:00`}
+                  tickFormatter={formatTime}
+                  interval="preserveStartEnd"
+                  tick={{ fontSize: 12 }}
+                  tickMargin={8}
                 />
                 <YAxis 
                   stroke="#ffffff50"
                   tickFormatter={(value) => `${value}°`}
+                  tick={{ fontSize: 12 }}
+                  tickMargin={8}
                 />
                 <Tooltip 
                   content={({ active, payload }) => {
                     if (active && payload && payload.length) {
                       return (
                         <div className="bg-[#2C2C2E] p-2 rounded-lg border border-white/10">
-                          <p className="text-white/90">{`${payload[0].value}°C`}</p>
-                          <p className="text-white/50 text-sm">{`${payload[0].payload.time}:00`}</p>
+                          <p className="text-white/90 text-sm">{`${payload[0].value}°C`}</p>
+                          <p className="text-white/50 text-xs">{formatTime(payload[0].payload.time)}</p>
                         </div>
                       );
                     }
