@@ -33,13 +33,20 @@ export interface WeatherData {
 }
 
 export const fetchWeatherData = async (city: string): Promise<WeatherData> => {
+  if (!city.trim()) {
+    toast.error("Please enter a city name");
+    throw new Error("City name is required");
+  }
+
   try {
     const response = await fetch(`${BASE_URL}/weather/${encodeURIComponent(city)}`);
     const data = await response.json();
     
     if (!response.ok) {
       if (response.status === 404) {
-        toast.error("City not found. Please enter a valid city name.");
+        toast.error("City not found. Please check the spelling and try again.");
+      } else if (response.status === 503) {
+        toast.error("Weather service is temporarily unavailable. Please try again later.");
       } else {
         toast.error("Unable to fetch weather data. Please try again later.");
       }
@@ -51,7 +58,7 @@ export const fetchWeatherData = async (city: string): Promise<WeatherData> => {
     if (error instanceof Error) {
       console.error("Weather API Error:", error);
       if (error.message.includes("Failed to fetch")) {
-        toast.error("Network error. Please check your connection.");
+        toast.error("Network error. Please check your internet connection.");
       }
     }
     throw error;

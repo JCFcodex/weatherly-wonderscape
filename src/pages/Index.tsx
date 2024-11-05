@@ -8,6 +8,7 @@ import { fetchWeatherData } from "@/services/weatherApi";
 import { LoadingCard } from "@/components/LoadingCard";
 import { motion } from "framer-motion";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { AlertCircle } from "lucide-react";
 
 const Index = () => {
   const [city, setCity] = useState("London");
@@ -16,6 +17,7 @@ const Index = () => {
     queryKey: ["weather", city],
     queryFn: () => fetchWeatherData(city),
     retry: false,
+    retryOnMount: false
   });
 
   const handleSearch = (newCity: string) => {
@@ -68,7 +70,17 @@ const Index = () => {
                 </Tabs>
               </div>
             </div>
-          ) : null}
+          ) : (
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="flex flex-col items-center justify-center p-8 bg-white/5 rounded-lg text-white/70"
+            >
+              <AlertCircle className="w-12 h-12 mb-4 text-red-400" />
+              <p className="text-lg font-medium">No weather data available</p>
+              <p className="text-sm mt-2">Please try searching for a valid city name</p>
+            </motion.div>
+          )}
         </motion.div>
       </div>
     </div>
