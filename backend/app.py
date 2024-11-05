@@ -3,6 +3,7 @@ from flask_cors import CORS
 import sqlite3
 import requests
 import os
+import json
 from datetime import datetime, timedelta
 
 app = Flask(__name__)
@@ -39,14 +40,14 @@ def get_cached_weather(city):
     conn.close()
     
     if result and datetime.strptime(result[1], '%Y-%m-%d %H:%M:%S') > datetime.now() - timedelta(minutes=30):
-        return result[0]
+        return json.loads(result[0])
     return None
 
 def cache_weather(city, data):
     conn = sqlite3.connect('weather.db')
     c = conn.cursor()
     c.execute('INSERT OR REPLACE INTO weather_cache (city, data, timestamp) VALUES (?, ?, ?)',
-              (city.lower(), data, datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
+              (city.lower(), json.dumps(data), datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
     conn.commit()
     conn.close()
 
@@ -84,6 +85,7 @@ def get_weather(city):
             return jsonify({'error': 'Failed to fetch weather data'}), 400
 
     except Exception as e:
+        print(f"Error in get_weather: {str(e)}")  # Add logging for debugging
         return jsonify({'error': str(e)}), 500
 
 @app.route('/api/recent-searches')
