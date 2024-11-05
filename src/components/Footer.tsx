@@ -11,7 +11,7 @@ export const Footer = () => {
     >
       <div className="max-w-[1200px] mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 px-4">
         <p className="text-sm text-white/50">
-          © 2024 Weather Dashboard. All rights reserved.
+          © 2024 ForeCastify. All rights reserved.
         </p>
         <div className="flex items-center gap-4">
           <a 
