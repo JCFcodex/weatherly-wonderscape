@@ -27,9 +27,9 @@ export const SearchBar = ({ onSearch }: SearchBarProps) => {
       <Input
         name="city"
         placeholder="Search for a city..."
-        className="pl-10 h-12 bg-white/10 backdrop-blur-lg border-white/10 text-white placeholder:text-white/50 focus:border-white/20"
+        className="pl-10 h-12 bg-white rounded-xl border-gray-200 text-gray-800 placeholder:text-gray-400 focus:border-gray-300 focus:ring-gray-300"
       />
-      <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/50 w-5 h-5" />
+      <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
     </motion.form>
   );
 };
