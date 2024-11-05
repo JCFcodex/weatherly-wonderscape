@@ -76,17 +76,19 @@ def get_weather(city):
         }
         
         response = requests.get(WEATHER_API_URL, params=params)
+        
         if response.status_code == 200:
             weather_data = response.json()
             cache_weather(city, weather_data)
             update_recent_searches(city)
             return jsonify(weather_data)
+        elif response.status_code == 400:
+            return jsonify({'error': 'City not found. Please enter a valid city name.'}), 404
         else:
-            return jsonify({'error': 'Failed to fetch weather data'}), 400
+            return jsonify({'error': 'Weather service is temporarily unavailable.'}), 503
 
     except Exception as e:
-        print(f"Error in get_weather: {str(e)}")  # Add logging for debugging
-        return jsonify({'error': str(e)}), 500
+        return jsonify({'error': 'An unexpected error occurred. Please try again later.'}), 500
 
 @app.route('/api/recent-searches')
 def get_recent_searches():

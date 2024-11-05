@@ -35,14 +35,20 @@ export interface WeatherData {
 export const fetchWeatherData = async (city: string): Promise<WeatherData> => {
   try {
     const response = await fetch(`${BASE_URL}/weather/${encodeURIComponent(city)}`);
+    const data = await response.json();
     
     if (!response.ok) {
-      throw new Error('Failed to fetch weather data');
+      toast.error(data.error || 'Failed to fetch weather data');
+      throw new Error(data.error || 'Failed to fetch weather data');
     }
     
-    return await response.json();
+    return data;
   } catch (error) {
-    toast.error("Failed to fetch weather data");
+    if (error instanceof Error) {
+      toast.error(error.message);
+    } else {
+      toast.error('An unexpected error occurred');
+    }
     throw error;
   }
 };
