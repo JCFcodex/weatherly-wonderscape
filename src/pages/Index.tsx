@@ -31,7 +31,7 @@ const Index = () => {
     <ThemeProvider defaultTheme="dark" attribute="class">
       <div className="min-h-screen bg-[#1C1C1E] dark:bg-[#1C1C1E] font-['Outfit'] overflow-x-hidden">
         <Header />
-        <main className="flex-1 px-4 sm:px-6 lg:px-8 py-4 sm:py-6 mt-14 sm:mt-16">
+        <main className="flex-1 px-4 sm:px-6 lg:px-8 py-4 sm:py-6 mt-20 sm:mt-24">
           <div className="max-w-[1200px] mx-auto">
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
