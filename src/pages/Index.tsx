@@ -29,27 +29,27 @@ const Index = () => {
 
   return (
     <ThemeProvider defaultTheme="dark" attribute="class">
-      <div className="min-h-screen bg-[#1C1C1E] dark:bg-[#1C1C1E] font-['Outfit'] overflow-hidden flex flex-col">
+      <div className="min-h-screen bg-[#1C1C1E] dark:bg-[#1C1C1E] font-['Outfit'] overflow-x-hidden">
         <Header />
-        <main className="flex-1 px-4 sm:px-6 lg:px-8 py-6 mt-16 sm:mt-20">
+        <main className="flex-1 px-4 sm:px-6 lg:px-8 py-4 sm:py-6 mt-14 sm:mt-16">
           <div className="max-w-[1200px] mx-auto">
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="space-y-4 sm:space-y-6"
+              className="space-y-4"
             >
               <SearchBar onSearch={handleSearch} />
               {isLoading ? (
                 <LoadingCard />
               ) : weather && !isError ? (
-                <div className="grid lg:grid-cols-12 gap-4">
+                <div className="grid lg:grid-cols-12 gap-3 sm:gap-4">
                   <div className="lg:col-span-4">
                     <WeatherCard weather={weather} />
                   </div>
                   <div className="lg:col-span-8">
                     <Tabs defaultValue="hourly" className="w-full">
-                      <TabsList className="w-full bg-white/5 border-0 mb-4">
+                      <TabsList className="w-full bg-white/5 border-0 mb-3 sm:mb-4">
                         <TabsTrigger 
                           value="hourly" 
                           className="flex-1 data-[state=active]:bg-white/10 data-[state=active]:text-white text-white/70"
