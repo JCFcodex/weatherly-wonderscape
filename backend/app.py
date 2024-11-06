@@ -1,11 +1,11 @@
 from flask import Flask, jsonify, request, send_from_directory
 from flask_cors import CORS
-import sqlite3
 import requests
 import os
 import json
 from datetime import datetime, timedelta
 from dotenv import load_dotenv
+from supabase import create_client, Client
 
 load_dotenv()
 
@@ -15,52 +15,32 @@ CORS(app)
 API_KEY = os.getenv('WEATHER_API_KEY' or '95225f90a68140d9bdb120731240511')
 WEATHER_API_URL = "https://api.weatherapi.com/v1/forecast.json"
 
-def init_db():
-    conn = sqlite3.connect('weather.db')
-    c = conn.cursor()
-    c.execute('''
-        CREATE TABLE IF NOT EXISTS weather_cache (
-            city TEXT PRIMARY KEY,
-            data TEXT,
-            timestamp DATETIME
-        )
-    ''')
-    c.execute('''
-        CREATE TABLE IF NOT EXISTS recent_searches (
-            city TEXT,
-            timestamp DATETIME,
-            PRIMARY KEY (city)
-        )
-    ''')
-    conn.commit()
-    conn.close()
+# Initialize Supabase client
+supabase_url = "https://jgsgxjpzqdakuhlpyise.supabase.co"
+supabase_key = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Impnc2d4anB6cWRha3VobHB5aXNlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzA4NzE2MTYsImV4cCI6MjA0NjQ0NzYxNn0.RG8hcFFj0AdEBsIDqem7-5HMcm8PxN9-qxPffFnRubA"
+supabase: Client = create_client(supabase_url, supabase_key)
 
 def get_cached_weather(city):
-    conn = sqlite3.connect('weather.db')
-    c = conn.cursor()
-    c.execute('SELECT data, timestamp FROM weather_cache WHERE city = ?', (city.lower(),))
-    result = c.fetchone()
-    conn.close()
-    
-    if result and datetime.strptime(result[1], '%Y-%m-%d %H:%M:%S') > datetime.now() - timedelta(minutes=30):
-        return json.loads(result[0])
+    result = supabase.table('weather_cache').select('*').eq('city', city.lower()).execute()
+    if result.data:
+        cached_data = result.data[0]
+        cache_time = datetime.fromisoformat(cached_data['timestamp'].replace('Z', '+00:00'))
+        if cache_time > datetime.now(cache_time.tzinfo) - timedelta(minutes=30):
+            return cached_data['data']
     return None
 
 def cache_weather(city, data):
-    conn = sqlite3.connect('weather.db')
-    c = conn.cursor()
-    c.execute('INSERT OR REPLACE INTO weather_cache (city, data, timestamp) VALUES (?, ?, ?)',
-              (city.lower(), json.dumps(data), datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
-    conn.commit()
-    conn.close()
+    supabase.table('weather_cache').upsert({
+        'city': city.lower(),
+        'data': data,
+        'timestamp': datetime.now().isoformat()
+    }).execute()
 
 def update_recent_searches(city):
-    conn = sqlite3.connect('weather.db')
-    c = conn.cursor()
-    c.execute('INSERT OR REPLACE INTO recent_searches (city, timestamp) VALUES (?, ?)',
-              (city.lower(), datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
-    conn.commit()
-    conn.close()
+    supabase.table('recent_searches').upsert({
+        'city': city.lower(),
+        'timestamp': datetime.now().isoformat()
+    }).execute()
 
 @app.route('/api/weather/<city>')
 def get_weather(city):
@@ -93,11 +73,8 @@ def get_weather(city):
 
 @app.route('/api/recent-searches')
 def get_recent_searches():
-    conn = sqlite3.connect('weather.db')
-    c = conn.cursor()
-    c.execute('SELECT city FROM recent_searches ORDER BY timestamp DESC LIMIT 5')
-    recent = [row[0] for row in c.fetchall()]
-    conn.close()
+    result = supabase.table('recent_searches').select('city').order('timestamp', desc=True).limit(5).execute()
+    recent = [item['city'] for item in result.data]
     return jsonify(recent)
 
 @app.route('/')
@@ -109,6 +86,5 @@ def not_found(e):
     return send_from_directory(app.static_folder, 'index.html')
 
 if __name__ == '__main__':
-    init_db()
     port = int(os.getenv("PORT", 5000))
     app.run(host="0.0.0.0", port=port, debug=False)
