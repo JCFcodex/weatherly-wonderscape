@@ -54,6 +54,22 @@ const About = () => {
                   <li>• Global coverage</li>
                 </ul>
               </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.6 }}
+                className="bg-white/5 p-6 rounded-lg md:col-span-2"
+              >
+                <h2 className="text-xl font-semibold text-white mb-4">Our Technology</h2>
+                <p className="text-white/70">
+                  ForeCastify is powered by <a href="https://www.weatherapi.com" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">WeatherAPI.com</a>, 
+                  a leading provider of weather data. This integration allows us to deliver highly accurate 
+                  weather forecasts, real-time updates, and detailed weather information for locations worldwide. 
+                  We combine this powerful API with our user-friendly interface to give you the best weather 
+                  forecasting experience possible.
+                </p>
+              </motion.div>
             </div>
           </motion.div>
         </div>
