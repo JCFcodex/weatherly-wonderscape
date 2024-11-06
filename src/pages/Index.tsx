@@ -80,7 +80,7 @@ const Index = () => {
                 >
                   <AlertCircle className="w-12 h-12 mb-4 text-red-400" />
                   <p className="text-lg font-medium">No weather data available</p>
-                  <p className="text-sm mt-2">Please try searching for a valid city name</p>
+                  <p className="text-sm mt-2">Please try searching for a valid location</p>
                 </motion.div>
               )}
             </motion.div>
