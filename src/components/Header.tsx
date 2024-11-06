@@ -1,12 +1,14 @@
-import { Cloud, Sun, Menu, X } from "lucide-react";
+import { Cloud, Sun, Menu, X, LogOut } from "lucide-react";
 import { motion } from "framer-motion";
 import { Button } from "./ui/button";
 import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 export const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
 
   const navItems = [
     { name: "Home", path: "/" },
@@ -16,6 +18,12 @@ export const Header = () => {
   ];
 
   const isActive = (path: string) => location.pathname === path;
+
+  const handleLogout = () => {
+    localStorage.removeItem("isLoggedIn");
+    toast.success("Successfully logged out!");
+    navigate("/login");
+  };
 
   return (
     <motion.header 
@@ -49,6 +57,15 @@ export const Header = () => {
               {item.name}
             </Link>
           ))}
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={handleLogout}
+            className="text-white/70 hover:text-white"
+          >
+            <LogOut className="h-4 w-4 mr-2" />
+            Logout
+          </Button>
         </nav>
 
         {/* Mobile Menu Button */}
@@ -84,6 +101,15 @@ export const Header = () => {
                   {item.name}
                 </Link>
               ))}
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={handleLogout}
+                className="text-white/70 hover:text-white justify-start"
+              >
+                <LogOut className="h-4 w-4 mr-2" />
+                Logout
+              </Button>
             </nav>
           </motion.div>
         )}
