@@ -6,10 +6,21 @@ from dotenv import load_dotenv
 load_dotenv()
 
 app = Flask(__name__)
-CORS(app, supports_credentials=True)
+CORS(app, 
+     supports_credentials=True,
+     resources={
+         r"/api/*": {
+             "origins": ["http://localhost:5173"],
+             "methods": ["GET", "POST", "OPTIONS"],
+             "allow_headers": ["Content-Type"],
+         }
+     })
 
-@app.route('/api/auth/set', methods=['POST'])
+@app.route('/api/auth/set', methods=['POST', 'OPTIONS'])
 def set_supabase_cookie():
+    if request.method == 'OPTIONS':
+        return '', 204
+        
     body = request.get_json()
     response = jsonify({'status': 'ok'})
     if body and body.get('session'):
@@ -20,14 +31,18 @@ def set_supabase_cookie():
             httponly=True,
             secure=True,
             samesite='Lax',
-            max_age=3600 * 24 * 7  # 1 week
+            max_age=3600 * 24 * 7,  # 1 week
+            domain='localhost'
         )
     return response
 
-@app.route('/api/auth/remove', methods=['POST'])
+@app.route('/api/auth/remove', methods=['POST', 'OPTIONS'])
 def remove_supabase_cookie():
+    if request.method == 'OPTIONS':
+        return '', 204
+        
     response = jsonify({'status': 'ok'})
-    response.delete_cookie('sb-auth-token')
+    response.delete_cookie('sb-auth-token', domain='localhost')
     return response
 
 if __name__ == '__main__':
