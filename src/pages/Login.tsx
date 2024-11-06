@@ -1,44 +1,12 @@
 import { Auth } from "@supabase/auth-ui-react";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
 import { supabase } from "@/integrations/supabase/client";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { motion } from "framer-motion";
-import { toast } from "@/components/ui/use-toast";
 
 const Login = () => {
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
-
-  useEffect(() => {
-    // Handle email confirmation
-    const handleEmailConfirmation = async () => {
-      const token_hash = searchParams.get('token_hash');
-      const type = searchParams.get('type');
-      
-      if (token_hash && type === 'email_confirmation') {
-        const { error } = await supabase.auth.verifyOtp({
-          token_hash,
-          type: 'signup',
-        });
-        
-        if (error) {
-          toast({
-            title: "Error confirming email",
-            description: error.message,
-            variant: "destructive",
-          });
-        } else {
-          toast({
-            title: "Email confirmed",
-            description: "You can now sign in with your email",
-          });
-        }
-      }
-    };
-
-    handleEmailConfirmation();
-  }, [searchParams]);
 
   useEffect(() => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
