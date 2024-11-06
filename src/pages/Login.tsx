@@ -20,6 +20,9 @@ const Login = () => {
       if (event === 'SIGNED_UP') {
         toast.success('Check your email for the confirmation link');
       }
+      if (event === 'SIGN_UP_ERROR') {
+        toast.error('This email is already registered');
+      }
     });
 
     return () => subscription.unsubscribe();
