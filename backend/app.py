@@ -13,13 +13,16 @@ CORS(app,
              "origins": ["http://localhost:5173"],
              "methods": ["GET", "POST", "OPTIONS"],
              "allow_headers": ["Content-Type"],
+             "expose_headers": ["Content-Type"],
+             "supports_credentials": True
          }
      })
 
 @app.route('/api/auth/set', methods=['POST', 'OPTIONS'])
 def set_supabase_cookie():
     if request.method == 'OPTIONS':
-        return '', 204
+        response = jsonify({'status': 'ok'})
+        return response
         
     body = request.get_json()
     response = jsonify({'status': 'ok'})
@@ -29,7 +32,7 @@ def set_supabase_cookie():
             'sb-auth-token',
             body['session']['access_token'],
             httponly=True,
-            secure=True,
+            secure=False,  # Set to True in production
             samesite='Lax',
             max_age=3600 * 24 * 7,  # 1 week
             domain='localhost'
@@ -39,7 +42,8 @@ def set_supabase_cookie():
 @app.route('/api/auth/remove', methods=['POST', 'OPTIONS'])
 def remove_supabase_cookie():
     if request.method == 'OPTIONS':
-        return '', 204
+        response = jsonify({'status': 'ok'})
+        return response
         
     response = jsonify({'status': 'ok'})
     response.delete_cookie('sb-auth-token', domain='localhost')

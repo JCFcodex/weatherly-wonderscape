@@ -32,24 +32,32 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
       if (event === 'SIGNED_IN' && session) {
         // Update cookie on sign in
-        await fetch(`${BASE_URL}/auth/set`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          credentials: 'include',
-          body: JSON.stringify({ event, session }),
-        });
+        try {
+          await fetch(`${BASE_URL}/auth/set`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            credentials: 'include',
+            body: JSON.stringify({ event, session }),
+          });
+        } catch (error) {
+          console.error('Error setting auth cookie:', error);
+        }
       } else if (event === 'SIGNED_OUT') {
         // Remove cookie on sign out
-        await fetch(`${BASE_URL}/auth/remove`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          credentials: 'include',
-          body: JSON.stringify({ event, session }),
-        });
+        try {
+          await fetch(`${BASE_URL}/auth/remove`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            credentials: 'include',
+            body: JSON.stringify({ event, session }),
+          });
+        } catch (error) {
+          console.error('Error removing auth cookie:', error);
+        }
       }
     });
 
