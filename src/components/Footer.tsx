@@ -7,7 +7,7 @@ export const Footer = () => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.2 }}
-      className="w-full mt-12 py-6 border-t border-white/10"
+      className="w-full py-6 mt-auto border-t border-white/10"
     >
       <div className="max-w-[1200px] mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 px-4">
         <p className="text-sm text-white/50">
