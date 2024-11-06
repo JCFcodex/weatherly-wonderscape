@@ -6,35 +6,22 @@ import os
 import json
 from datetime import datetime, timedelta
 from dotenv import load_dotenv
+from functools import lru_cache
 
 load_dotenv()
 
 app = Flask(__name__, static_folder='../dist', static_url_path='')
 CORS(app)
-
 API_KEY = os.getenv('WEATHER_API_KEY' or '95225f90a68140d9bdb120731240511')
 WEATHER_API_URL = "https://api.weatherapi.com/v1/forecast.json"
 
-def init_db():
-    conn = sqlite3.connect('weather.db')
-    c = conn.cursor()
-    c.execute('''
-        CREATE TABLE IF NOT EXISTS weather_cache (
-            city TEXT PRIMARY KEY,
-            data TEXT,
-            timestamp DATETIME
-        )
-    ''')
-    c.execute('''
-        CREATE TABLE IF NOT EXISTS recent_searches (
-            city TEXT,
-            timestamp DATETIME,
-            PRIMARY KEY (city)
-        )
-    ''')
-    conn.commit()
-    conn.close()
+def get_db():
+    db = getattr(g, '_database', None)
+    if db is None:
+        db = g._database = sqlite3.connect('weather.db')
+    return db
 
+@lru_cache(maxsize=100)
 def get_cached_weather(city):
     conn = sqlite3.connect('weather.db')
     c = conn.cursor()
@@ -51,14 +38,6 @@ def cache_weather(city, data):
     c = conn.cursor()
     c.execute('INSERT OR REPLACE INTO weather_cache (city, data, timestamp) VALUES (?, ?, ?)',
               (city.lower(), json.dumps(data), datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
-    conn.commit()
-    conn.close()
-
-def update_recent_searches(city):
-    conn = sqlite3.connect('weather.db')
-    c = conn.cursor()
-    c.execute('INSERT OR REPLACE INTO recent_searches (city, timestamp) VALUES (?, ?)',
-              (city.lower(), datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
     conn.commit()
     conn.close()
 
@@ -81,34 +60,19 @@ def get_weather(city):
         if response.status_code == 200:
             weather_data = response.json()
             cache_weather(city, weather_data)
-            update_recent_searches(city)
             return jsonify(weather_data)
         elif response.status_code == 400:
-            return jsonify({'error': 'City not found. Please enter a valid city name.'}), 404
+            return jsonify({'error': 'City not found'}), 404
         else:
-            return jsonify({'error': 'Weather service is temporarily unavailable.'}), 503
+            return jsonify({'error': 'Weather service unavailable'}), 503
 
     except Exception as e:
-        return jsonify({'error': 'An unexpected error occurred. Please try again later.'}), 500
-
-@app.route('/api/recent-searches')
-def get_recent_searches():
-    conn = sqlite3.connect('weather.db')
-    c = conn.cursor()
-    c.execute('SELECT city FROM recent_searches ORDER BY timestamp DESC LIMIT 5')
-    recent = [row[0] for row in c.fetchall()]
-    conn.close()
-    return jsonify(recent)
+        return jsonify({'error': 'An unexpected error occurred'}), 500
 
 @app.route('/')
 def serve_frontend():
     return send_from_directory(app.static_folder, 'index.html')
 
-@app.errorhandler(404)
-def not_found(e):
-    return send_from_directory(app.static_folder, 'index.html')
-
 if __name__ == '__main__':
-    init_db()
     port = int(os.getenv("PORT", 5000))
-    app.run(host="0.0.0.0", port=port, debug=False)
+    app.run(host="0.0.0.0", port=port)
