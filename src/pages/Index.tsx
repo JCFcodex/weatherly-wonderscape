@@ -31,13 +31,13 @@ const Index = () => {
     <ThemeProvider defaultTheme="dark" attribute="class">
       <div className="min-h-screen bg-[#1C1C1E] dark:bg-[#1C1C1E] font-['Outfit'] overflow-hidden flex flex-col">
         <Header />
-        <main className="flex-1 px-4 py-6 mt-20">
+        <main className="flex-1 px-4 sm:px-6 lg:px-8 py-6 mt-16 sm:mt-20">
           <div className="max-w-[1200px] mx-auto">
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="space-y-6"
+              className="space-y-4 sm:space-y-6"
             >
               <SearchBar onSearch={handleSearch} />
               {isLoading ? (
@@ -76,11 +76,11 @@ const Index = () => {
                 <motion.div 
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  className="flex flex-col items-center justify-center p-8 bg-white/5 rounded-lg text-white/70"
+                  className="flex flex-col items-center justify-center p-4 sm:p-8 bg-white/5 rounded-lg text-white/70"
                 >
-                  <AlertCircle className="w-12 h-12 mb-4 text-red-400" />
-                  <p className="text-lg font-medium">No weather data available</p>
-                  <p className="text-sm mt-2">Please try searching for a valid location</p>
+                  <AlertCircle className="w-8 h-8 sm:w-12 sm:h-12 mb-4 text-red-400" />
+                  <p className="text-base sm:text-lg font-medium text-center">No weather data available</p>
+                  <p className="text-xs sm:text-sm mt-2 text-center">Please try searching for a valid location</p>
                 </motion.div>
               )}
             </motion.div>
