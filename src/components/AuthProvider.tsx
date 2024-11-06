@@ -24,7 +24,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       setSession(session);
       setLoading(false);
 
-      if (event === 'SIGNED_IN') {
+      if (event === 'SIGNED_IN' && session) {
         // Update cookie on sign in
         await fetch('/api/auth/set', {
           method: 'POST',
