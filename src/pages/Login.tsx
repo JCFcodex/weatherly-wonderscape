@@ -18,18 +18,7 @@ const Login = () => {
         toast.success('Password updated successfully!');
       }
       if (event === 'SIGNED_UP') {
-        const { data: { user } } = await supabase.auth.getUser();
-        if (user?.email) {
-          const { data: existingUser } = await supabase.auth.signInWithPassword({
-            email: user.email,
-            password: '', // This will fail, but we just want to check if the account exists
-          });
-          
-          if (existingUser) {
-            toast.error('Account already exists. Please sign in instead.');
-            return;
-          }
-        }
+        toast.success('Check your email for the confirmation link');
       }
     });
 
@@ -72,6 +61,21 @@ const Login = () => {
             }}
             theme="dark"
             providers={[]}
+            onlyThirdPartyProviders={false}
+            localization={{
+              variables: {
+                sign_up: {
+                  email_label: 'Email address',
+                  password_label: 'Create a Password',
+                  button_label: 'Sign up',
+                  loading_button_label: 'Signing up...',
+                  social_provider_text: 'Sign in with {{provider}}',
+                  link_text: "Don't have an account? Sign up",
+                  confirmation_text: 'Check your email for the confirmation link',
+                },
+              },
+            }}
+            redirectTo={window.location.origin}
           />
         </div>
       </motion.div>
