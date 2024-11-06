@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, send_from_directory
 from flask_cors import CORS
 import sqlite3
 import requests
@@ -9,7 +9,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='../dist', static_url_path='')
 CORS(app)
 
 API_KEY = os.getenv('WEATHER_API_KEY' or '95225f90a68140d9bdb120731240511')
@@ -65,12 +65,10 @@ def update_recent_searches(city):
 @app.route('/api/weather/<city>')
 def get_weather(city):
     try:
-        # Check cache first
         cached_data = get_cached_weather(city)
         if cached_data:
             return jsonify(cached_data)
 
-        # If not in cache, fetch from API
         params = {
             'key': API_KEY,
             'q': city,
@@ -101,6 +99,14 @@ def get_recent_searches():
     recent = [row[0] for row in c.fetchall()]
     conn.close()
     return jsonify(recent)
+
+@app.route('/')
+def serve_frontend():
+    return send_from_directory(app.static_folder, 'index.html')
+
+@app.errorhandler(404)
+def not_found(e):
+    return send_from_directory(app.static_folder, 'index.html')
 
 if __name__ == '__main__':
     init_db()
