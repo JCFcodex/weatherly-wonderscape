@@ -6,7 +6,12 @@ from dotenv import load_dotenv
 load_dotenv()
 
 app = Flask(__name__)
-CORS(app, supports_credentials=True)
+CORS(app, resources={
+    r"/api/*": {
+        "origins": ["http://localhost:5173"],
+        "supports_credentials": True
+    }
+})
 
 @app.route('/api/auth/set', methods=['POST'])
 def set_supabase_cookie():

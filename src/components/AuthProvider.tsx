@@ -34,16 +34,20 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         // Update cookie on sign in
         await fetch(`${BASE_URL}/auth/set`, {
           method: 'POST',
-          headers: new Headers({ 'Content-Type': 'application/json' }),
-          credentials: 'same-origin',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          credentials: 'include',
           body: JSON.stringify({ event, session }),
         });
       } else if (event === 'SIGNED_OUT') {
         // Remove cookie on sign out
-        await fetch(`${BASE_URL}/auth/Remove`, {
+        await fetch(`${BASE_URL}/auth/remove`, {
           method: 'POST',
-          headers: new Headers({ 'Content-Type': 'application/json' }),
-          credentials: 'same-origin',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          credentials: 'include',
           body: JSON.stringify({ event, session }),
         });
       }
