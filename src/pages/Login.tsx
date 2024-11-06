@@ -10,7 +10,7 @@ const Login = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
       if (event === 'SIGNED_IN' && session) {
         navigate("/");
       }
@@ -18,7 +18,14 @@ const Login = () => {
         toast.success('Password updated successfully!');
       }
       if (event === 'SIGNED_UP') {
-        toast.error('This email is already registered. Please sign in instead.');
+        // Check if user already exists
+        const { error } = await supabase.auth.signUp({
+          email: session?.user?.email || '',
+          password: '', // This will fail since we don't have the password
+        });
+        if (error?.message?.includes('User already registered')) {
+          toast.error('This email is already registered. Please sign in instead.');
+        }
       }
     });
 
@@ -62,6 +69,19 @@ const Login = () => {
             theme="dark"
             providers={[]}
             redirectTo={window.location.origin}
+            localization={{
+              variables: {
+                sign_up: {
+                  email_input_placeholder: 'Your email',
+                  password_input_placeholder: 'Your password',
+                  button_label: 'Sign up',
+                  loading_button_label: 'Signing up ...',
+                  social_provider_text: 'Sign in with {{provider}}',
+                  link_text: "Don't have an account? Sign up",
+                  confirmation_text: 'Account already exists. Please sign in instead.',
+                },
+              },
+            }}
           />
         </div>
       </motion.div>
