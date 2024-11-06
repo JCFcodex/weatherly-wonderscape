@@ -15,6 +15,8 @@ import { ThemeProvider } from "next-themes";
 
 const Index = () => {
   const [city, setCity] = useState("Manila");
+  const [activeTab, setActiveTab] = useState("hourly");
+  const [isTabLoading, setIsTabLoading] = useState(false);
 
   const { data: weather, isLoading, isError } = useQuery({
     queryKey: ["weather", city],
@@ -25,6 +27,15 @@ const Index = () => {
 
   const handleSearch = (newCity: string) => {
     setCity(newCity);
+  };
+
+  const handleTabChange = (value: string) => {
+    setIsTabLoading(true);
+    setActiveTab(value);
+    // Simulate tab loading for smoother transition
+    setTimeout(() => {
+      setIsTabLoading(false);
+    }, 500);
   };
 
   return (
@@ -48,7 +59,12 @@ const Index = () => {
                     <WeatherCard weather={weather} />
                   </div>
                   <div className="lg:col-span-8">
-                    <Tabs defaultValue="hourly" className="w-full">
+                    <Tabs 
+                      defaultValue="hourly" 
+                      className="w-full"
+                      value={activeTab}
+                      onValueChange={handleTabChange}
+                    >
                       <TabsList className="w-full bg-white/5 border-0 mb-3 sm:mb-4">
                         <TabsTrigger 
                           value="hourly" 
@@ -63,12 +79,18 @@ const Index = () => {
                           Weekly
                         </TabsTrigger>
                       </TabsList>
-                      <TabsContent value="hourly" className="mt-0">
-                        <WeatherChart forecast={weather.forecast} />
-                      </TabsContent>
-                      <TabsContent value="weekly" className="mt-0">
-                        <WeatherForecast forecast={weather.forecast} />
-                      </TabsContent>
+                      {isTabLoading ? (
+                        <LoadingCard />
+                      ) : (
+                        <>
+                          <TabsContent value="hourly" className="mt-0">
+                            <WeatherChart forecast={weather.forecast} />
+                          </TabsContent>
+                          <TabsContent value="weekly" className="mt-0">
+                            <WeatherForecast forecast={weather.forecast} />
+                          </TabsContent>
+                        </>
+                      )}
                     </Tabs>
                   </div>
                 </div>
