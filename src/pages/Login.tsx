@@ -4,6 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { motion } from "framer-motion";
+import { toast } from "sonner";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -12,6 +13,12 @@ const Login = () => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       if (event === 'SIGNED_IN' && session) {
         navigate("/");
+      }
+      if (event === 'USER_UPDATED') {
+        toast.success('Password updated successfully!');
+      }
+      if (event === 'SIGNED_UP') {
+        toast.error('This email is already registered. Please sign in instead.');
       }
     });
 
@@ -54,6 +61,7 @@ const Login = () => {
             }}
             theme="dark"
             providers={[]}
+            redirectTo={window.location.origin}
           />
         </div>
       </motion.div>
