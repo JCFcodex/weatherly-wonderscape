@@ -12,12 +12,12 @@ load_dotenv()
 app = Flask(__name__, static_folder='../dist', static_url_path='')
 CORS(app)
 
-API_KEY = os.getenv('WEATHER_API_KEY' or '95225f90a68140d9bdb120731240511')
+API_KEY = os.getenv('WEATHER_API_KEY')
 WEATHER_API_URL = "https://api.weatherapi.com/v1/forecast.json"
 
 # Initialize Supabase client
-supabase_url = "https://jgsgxjpzqdakuhlpyise.supabase.co"
-supabase_key = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Impnc2d4anB6cWRha3VobHB5aXNlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzA4NzE2MTYsImV4cCI6MjA0NjQ0NzYxNn0.RG8hcFFj0AdEBsIDqem7-5HMcm8PxN9-qxPffFnRubA"
+supabase_url = os.getenv('SUPABASE_URL')
+supabase_key = os.getenv('SUPABASE_KEY')
 supabase: Client = create_client(supabase_url, supabase_key)
 
 def get_cached_weather(city):
