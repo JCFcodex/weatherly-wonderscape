@@ -1,8 +1,12 @@
-import { createContext, useContext, useEffect, useState } from "react";
-import { Session } from "@supabase/supabase-js";
-import { supabase } from "@/integrations/supabase/client";
+import { createContext, useContext, useEffect, useState } from 'react';
+import { Session } from '@supabase/supabase-js';
+import { supabase } from '@/integrations/supabase/client';
 
-const AuthContext = createContext<{ session: Session | null }>({ session: null });
+const BASE_URL = 'http://localhost:5000/api';
+
+const AuthContext = createContext<{ session: Session | null }>({
+  session: null,
+});
 
 export const useAuth = () => {
   return useContext(AuthContext);
@@ -20,13 +24,15 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     });
 
     // Listen for auth changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange(async (event, session) => {
       setSession(session);
       setLoading(false);
 
       if (event === 'SIGNED_IN' && session) {
         // Update cookie on sign in
-        await fetch('/api/auth/set', {
+        await fetch(`${BASE_URL}/auth/set`, {
           method: 'POST',
           headers: new Headers({ 'Content-Type': 'application/json' }),
           credentials: 'same-origin',
@@ -34,7 +40,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         });
       } else if (event === 'SIGNED_OUT') {
         // Remove cookie on sign out
-        await fetch('/api/auth/remove', {
+        await fetch(`${BASE_URL}/auth/Remove`, {
           method: 'POST',
           headers: new Headers({ 'Content-Type': 'application/json' }),
           credentials: 'same-origin',
@@ -51,8 +57,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   }
 
   return (
-    <AuthContext.Provider value={{ session }}>
-      {children}
-    </AuthContext.Provider>
+    <AuthContext.Provider value={{ session }}>{children}</AuthContext.Provider>
   );
 };
