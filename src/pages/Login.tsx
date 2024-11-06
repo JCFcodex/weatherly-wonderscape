@@ -10,7 +10,7 @@ const Login = () => {
 
   useEffect(() => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-      if (session) {
+      if (event === 'SIGNED_IN' && session) {
         navigate("/");
       }
     });
@@ -39,8 +39,17 @@ const Login = () => {
                   colors: {
                     brand: '#3b82f6',
                     brandAccent: '#2563eb',
+                    inputBackground: 'transparent',
+                    inputText: 'white',
+                    inputPlaceholder: 'gray',
                   },
                 },
+              },
+              className: {
+                container: 'auth-container',
+                button: 'auth-button',
+                input: 'auth-input',
+                label: 'auth-label',
               },
             }}
             theme="dark"
