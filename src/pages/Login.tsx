@@ -4,14 +4,32 @@ import { supabase } from "@/integrations/supabase/client";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { motion } from "framer-motion";
+import { toast } from "sonner";
 
 const Login = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
       if (event === 'SIGNED_IN' && session) {
         navigate("/");
+      }
+      if (event === 'USER_UPDATED') {
+        toast.success('Password updated successfully!');
+      }
+      if (event === 'SIGNED_UP') {
+        const { data: { user } } = await supabase.auth.getUser();
+        if (user?.email) {
+          const { data: existingUser } = await supabase.auth.signInWithPassword({
+            email: user.email,
+            password: '', // This will fail, but we just want to check if the account exists
+          });
+          
+          if (existingUser) {
+            toast.error('Account already exists. Please sign in instead.');
+            return;
+          }
+        }
       }
     });
 
