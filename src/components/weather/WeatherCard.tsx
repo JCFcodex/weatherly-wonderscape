@@ -29,7 +29,6 @@ export const WeatherCard = ({ weather }: WeatherCardProps) => {
               <WeatherIcon condition={weather.current.condition.text} className="w-5 h-5 sm:w-6 sm:h-6 text-white/70" />
               <h2 className="text-lg sm:text-xl font-medium text-white/90">{weather.location.name}</h2>
             </div>
-            <p className="text-white/50 mt-1 text-xs sm:text-sm">{weather.location.country}</p>
             <p className="text-white/50 mt-1 text-xs sm:text-sm">{date}</p>
           </div>
 
