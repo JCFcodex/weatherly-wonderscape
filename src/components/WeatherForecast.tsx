@@ -9,9 +9,9 @@ interface WeatherForecastProps {
 export const WeatherForecast = ({ forecast }: WeatherForecastProps) => {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: 0.2 }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.8, ease: "easeOut" }}
       className="w-full"
     >
       <Card className="w-full p-4 sm:p-6 bg-[#2C2C2E]/80 backdrop-blur-xl rounded-3xl border-0">
@@ -20,11 +20,11 @@ export const WeatherForecast = ({ forecast }: WeatherForecastProps) => {
           {forecast.forecastday.map((day: any, index: number) => (
             <motion.div
               key={day.date}
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
               transition={{ 
-                duration: 0.5,
-                delay: index * 0.1,
+                duration: 0.8,
+                delay: 0.2,
                 ease: "easeOut"
               }}
               className="flex items-center justify-between p-2 sm:p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors duration-300"
