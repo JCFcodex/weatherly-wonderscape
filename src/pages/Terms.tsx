@@ -39,7 +39,7 @@ const Terms = () => {
                 <CardContent className="p-6">
                   <h2 className="text-2xl font-semibold text-white mb-4">1. Service Description</h2>
                   <p className="text-white/80 leading-relaxed">
-                    ForeCastify is a free weather forecasting service powered by WeatherAPI.com that provides:
+                    ForeCastify is a free weather forecasting service that provides:
                   </p>
                   <ul className="list-disc pl-6 mt-4 text-white/80 space-y-2">
                     <li>Real-time weather updates</li>
@@ -48,7 +48,7 @@ const Terms = () => {
                     <li>Weather charts and data visualization</li>
                   </ul>
                   <p className="mt-4 text-white/80">
-                    No account creation or login is required to use our services. All weather data is provided through our integration with WeatherAPI.com.
+                    No account creation or login is required to use our services. Weather data is provided by WeatherAPI.com.
                   </p>
                 </CardContent>
               </Card>
@@ -63,23 +63,21 @@ const Terms = () => {
                     <li>Use the service for personal, non-commercial purposes only</li>
                     <li>Not attempt to manipulate or abuse the service</li>
                     <li>Not use automated systems to access the service</li>
-                    <li>Not redistribute or sell our weather data</li>
-                    <li>Comply with WeatherAPI.com's terms of service</li>
+                    <li>Not redistribute or sell weather data</li>
                   </ul>
                 </CardContent>
               </Card>
 
               <Card className="bg-white/5 border-white/10 backdrop-blur-sm">
                 <CardContent className="p-6">
-                  <h2 className="text-2xl font-semibold text-white mb-4">3. Weather Data and API Usage</h2>
+                  <h2 className="text-2xl font-semibold text-white mb-4">3. Weather Data</h2>
                   <p className="text-white/80 leading-relaxed">
-                    Our weather data is sourced from WeatherAPI.com:
+                    Please note that:
                   </p>
                   <ul className="list-disc pl-6 mt-4 text-white/80 space-y-2">
-                    <li>Weather data accuracy and availability are subject to WeatherAPI.com's service</li>
                     <li>Weather forecasts are provided "as is" without any guarantees</li>
-                    <li>Service availability depends on WeatherAPI.com's uptime and reliability</li>
-                    <li>We are not responsible for any decisions made based on the weather data provided</li>
+                    <li>Service availability and data accuracy depend on our provider</li>
+                    <li>We are not responsible for decisions made based on the weather data</li>
                   </ul>
                 </CardContent>
               </Card>

@@ -71,7 +71,7 @@ const Privacy = () => {
                 <CardContent className="p-6">
                   <h2 className="text-2xl font-semibold text-white mb-4">3. Data Protection</h2>
                   <p className="text-white/80 leading-relaxed">
-                    While we don't collect personal data or require accounts, we still implement industry-standard security measures to protect any data that passes through our service:
+                    We implement industry-standard security measures to protect any data that passes through our service:
                   </p>
                   <ul className="list-disc pl-6 mt-4 text-white/80 space-y-2">
                     <li>Secure HTTPS encryption for all data transfers</li>
@@ -85,7 +85,7 @@ const Privacy = () => {
                 <CardContent className="p-6">
                   <h2 className="text-2xl font-semibold text-white mb-4">4. Third-Party Services</h2>
                   <p className="text-white/80 leading-relaxed">
-                    We use WeatherAPI.com to provide weather data. Their use of information is governed by their own privacy policy. We do not share any user information with third parties beyond what is necessary for providing our weather forecasting service.
+                    We use WeatherAPI.com as our weather data provider. We do not share any user information with third parties beyond what is necessary for providing our weather forecasting service.
                   </p>
                 </CardContent>
               </Card>
