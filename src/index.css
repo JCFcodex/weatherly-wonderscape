@@ -69,10 +69,12 @@
 @layer base {
   * {
     @apply border-border;
+    transition: all 0.3s ease-in-out;
   }
 
   body {
     @apply bg-background text-foreground;
+    min-height: 100vh;
   }
 
   /* Hide scrollbar for Chrome, Safari and Opera */
@@ -85,4 +87,13 @@
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
   }
+}
+
+/* Add smooth transitions for layout changes */
+.space-y-4 > * {
+  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+
+main, section, div {
+  transition: height 0.3s ease-in-out, opacity 0.3s ease-in-out;
 }
