@@ -37,7 +37,7 @@ export const Footer = () => {
               © 2024 ForeCastify
             </p>
             <div className="flex items-center gap-4">
-              {["About", "Features", "Contact"].map((item) => (
+              {["About", "Features", "Contact", "Terms", "Privacy"].map((item) => (
                 <button
                   key={item}
                   onClick={() => handleNavigation(`/${item.toLowerCase()}`)}
