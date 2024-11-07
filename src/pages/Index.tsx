@@ -76,16 +76,16 @@ const Index = () => {
                       value={activeTab}
                       onValueChange={handleTabChange}
                     >
-                      <TabsList className="mb-4 p-1.5">
+                      <TabsList className="mb-4">
                         <TabsTrigger 
                           value="hourly" 
-                          className="flex-1 text-white/70 hover:text-white/90 transition-colors"
+                          className="flex-1 text-white/70 hover:text-white transition-colors"
                         >
                           Hourly Forecast
                         </TabsTrigger>
                         <TabsTrigger 
                           value="weekly" 
-                          className="flex-1 text-white/70 hover:text-white/90 transition-colors"
+                          className="flex-1 text-white/70 hover:text-white transition-colors"
                         >
                           Weekly Forecast
                         </TabsTrigger>
