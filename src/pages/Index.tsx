@@ -33,6 +33,7 @@ const Index = () => {
   const handleTabChange = (value: string) => {
     setIsTabLoading(true);
     setActiveTab(value);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     setTimeout(() => {
       setIsTabLoading(false);
     }, 500);
