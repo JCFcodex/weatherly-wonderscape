@@ -7,9 +7,6 @@ from services.weather_service import get_cached_weather, cache_weather, fetch_we
 app = Flask(__name__, static_folder='../dist', static_url_path='')
 CORS(app)
 
-# Remove trailing slashes
-app.url_map.strict_slashes = False
-
 @app.route('/api/weather/<query>')
 def get_weather(query):
     try:
@@ -42,20 +39,17 @@ def get_weather(query):
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-# Serve static files
-@app.route('<path:filename>')
-def serve_static(filename):
-    response = make_response(send_from_directory(app.static_folder, filename))
-    if filename.endswith(('.js', '.css', '.png', '.jpg', '.jpeg', '.gif', '.svg')):
-        response.headers['Cache-Control'] = 'public, max-age=31536000'
-    return response
-
-# Catch all routes and serve index.html
-@app.route('', defaults={'path': ''})
-@app.route('<path:path>')
-def catch_all(path):
+@app.route('/')
+def serve_frontend():
     response = make_response(send_from_directory(app.static_folder, 'index.html'))
     response.headers['Cache-Control'] = 'public, max-age=3600'
+    return response
+
+@app.route('/<path:path>')
+def serve_static(path):
+    response = make_response(send_from_directory(app.static_folder, path))
+    if path.endswith(('.js', '.css', '.png', '.jpg', '.jpeg', '.gif', '.svg')):
+        response.headers['Cache-Control'] = 'public, max-age=31536000'
     return response
 
 if __name__ == '__main__':
