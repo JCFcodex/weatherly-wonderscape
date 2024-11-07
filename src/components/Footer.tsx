@@ -1,5 +1,5 @@
-import { Github, Twitter, Facebook, Instagram, Linkedin, Youtube } from "lucide-react";
 import { motion } from "framer-motion";
+import { Heart, ChevronRight } from "lucide-react";
 import { useNavigate, useLocation } from "react-router-dom";
 
 export const Footer = () => {
@@ -13,86 +13,47 @@ export const Footer = () => {
     }
   };
 
-  const socialLinks = [
-    { icon: Github, href: "https://github.com" },
-    { icon: Twitter, href: "https://twitter.com" },
-    { icon: Facebook, href: "https://facebook.com" },
-    { icon: Instagram, href: "https://instagram.com" },
-    { icon: Linkedin, href: "https://linkedin.com" },
-    { icon: Youtube, href: "https://youtube.com" },
+  const links = [
+    { title: "About", path: "/about" },
+    { title: "Features", path: "/features" },
+    { title: "Contact", path: "/contact" },
+    { title: "Terms", path: "/terms" },
+    { title: "Privacy", path: "/privacy" }
   ];
 
   return (
     <motion.footer 
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.2 }}
-      className="w-full py-6 mt-auto bg-gradient-to-b from-[#1C1C1E]/95 to-[#2C2C2E] border-t border-white/10 backdrop-blur-sm"
+      transition={{ duration: 0.3 }}
+      className="w-full py-4 mt-auto bg-gradient-to-b from-[#1C1C1E]/90 to-[#2C2C2E]/95 border-t border-white/10 backdrop-blur-sm"
     >
       <div className="container mx-auto px-4">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-          {/* Brand Section */}
-          <div className="space-y-2">
-            <h3 className="text-base font-semibold text-white">ForeCastify</h3>
-            <p className="text-xs text-white/60 leading-relaxed">
-              Your trusted weather companion.
-            </p>
+        <div className="flex flex-col items-center space-y-4">
+          {/* Brand */}
+          <div className="flex items-center space-x-2">
+            <span className="text-lg font-semibold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+              ForeCastify
+            </span>
+            <Heart className="w-4 h-4 text-red-400 animate-pulse" />
           </div>
 
-          {/* Quick Links */}
-          <div className="space-y-2">
-            <h3 className="text-base font-semibold text-white">Quick Links</h3>
-            <div className="flex flex-col space-y-1">
-              {["About", "Features", "Contact"].map((item) => (
-                <button
-                  key={item}
-                  onClick={() => handleNavigation(`/${item.toLowerCase()}`)}
-                  className="text-xs text-white/60 hover:text-white transition-colors text-left w-fit"
-                >
-                  {item}
-                </button>
-              ))}
-            </div>
-          </div>
+          {/* Navigation */}
+          <nav className="flex flex-wrap justify-center gap-3">
+            {links.map(({ title, path }) => (
+              <button
+                key={path}
+                onClick={() => handleNavigation(path)}
+                className="group flex items-center text-sm text-white/60 hover:text-white transition-colors"
+              >
+                {title}
+                <ChevronRight className="w-3 h-3 ml-0.5 opacity-0 group-hover:opacity-100 transition-opacity" />
+              </button>
+            ))}
+          </nav>
 
-          {/* Legal Links */}
-          <div className="space-y-2">
-            <h3 className="text-base font-semibold text-white">Legal</h3>
-            <div className="flex flex-col space-y-1">
-              {["Terms", "Privacy"].map((item) => (
-                <button
-                  key={item}
-                  onClick={() => handleNavigation(`/${item.toLowerCase()}`)}
-                  className="text-xs text-white/60 hover:text-white transition-colors text-left w-fit"
-                >
-                  {item}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Social Links */}
-          <div className="space-y-2">
-            <h3 className="text-base font-semibold text-white">Connect</h3>
-            <div className="flex flex-wrap gap-2">
-              {socialLinks.map(({ icon: Icon, href }) => (
-                <a
-                  key={href}
-                  href={href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-7 h-7 rounded-lg bg-white/5 hover:bg-white/10 flex items-center justify-center group transition-all duration-300"
-                >
-                  <Icon className="w-3.5 h-3.5 text-white/60 group-hover:text-primary transition-colors" />
-                </a>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* Copyright */}
-        <div className="mt-6 pt-4 border-t border-white/10">
-          <p className="text-xs text-center text-white/60">
+          {/* Copyright */}
+          <p className="text-xs text-white/50">
             © {new Date().getFullYear()} ForeCastify. All rights reserved.
           </p>
         </div>
