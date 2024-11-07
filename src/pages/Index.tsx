@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { SearchBar } from "@/components/SearchBar";
 import { WeatherCard } from "@/components/WeatherCard";
-import { WeatherChart } from "@/components/WeatherChart";
+import { LazyChart } from "@/components/LazyChart";
 import { WeatherForecast } from "@/components/WeatherForecast";
 import { fetchWeatherData } from "@/services/weatherApi";
 import { LoadingCard } from "@/components/LoadingCard";
@@ -22,8 +22,9 @@ const Index = () => {
   const { data: weather, isLoading, isError } = useQuery({
     queryKey: ["weather", city],
     queryFn: () => fetchWeatherData(city),
-    retry: false,
-    retryOnMount: false
+    staleTime: 300000, // 5 minutes
+    cacheTime: 3600000, // 1 hour
+    retry: 1
   });
 
   const handleSearch = (newCity: string) => {
@@ -40,12 +41,10 @@ const Index = () => {
 
   return (
     <ThemeProvider defaultTheme="dark" attribute="class">
-      <div className="min-h-screen flex flex-col bg-[#1C1C1E] dark:bg-[#1C1C1E] font-['Outfit'] overflow-x-hidden">
+      <div className="min-h-screen flex flex-col bg-[#1C1C1E] dark:bg-[#1C1C1E] font-['Outfit']">
         <Helmet>
           <title>ForeCastify - Weather Forecast for {city}</title>
           <meta name="description" content={`Get real-time weather updates and forecast for ${city}. View temperature, humidity, wind speed, and more.`} />
-          <meta name="keywords" content={`${city} weather, weather forecast, temperature, humidity, wind speed, weather updates`} />
-          <link rel="canonical" href={`https://forecastify.com/weather/${city.toLowerCase()}`} />
         </Helmet>
         <Header />
         <main className="flex-1 px-4 sm:px-6 lg:px-8 py-4 sm:py-6 mt-20 sm:mt-24">
@@ -53,54 +52,36 @@ const Index = () => {
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
+              transition={{ duration: 0.3 }}
               className="space-y-4"
             >
-              <section aria-label="Weather Search">
-                <h1 className="sr-only">Weather Forecast for {city}</h1>
-                <SearchBar onSearch={handleSearch} />
-              </section>
+              <SearchBar onSearch={handleSearch} />
 
               {isLoading ? (
-                <section aria-label="Loading Weather Data">
-                  <LoadingCard />
-                </section>
+                <LoadingCard />
               ) : weather && !isError ? (
                 <div className="grid lg:grid-cols-12 gap-3 sm:gap-4">
-                  <section aria-label="Current Weather" className="lg:col-span-4">
-                    <h2 className="sr-only">Current Weather Conditions</h2>
+                  <section className="lg:col-span-4">
                     <WeatherCard weather={weather} />
                   </section>
-                  <section aria-label="Weather Forecast" className="lg:col-span-8">
-                    <h2 className="sr-only">Weather Forecast Details</h2>
+                  <section className="lg:col-span-8">
                     <Tabs 
                       defaultValue="hourly" 
-                      className="w-full"
                       value={activeTab}
                       onValueChange={handleTabChange}
                     >
-                      <TabsList className="w-full bg-white/5 border-0 mb-3 sm:mb-4">
-                        <TabsTrigger 
-                          value="hourly" 
-                          className="flex-1 data-[state=active]:bg-white/10 data-[state=active]:text-white text-white/70"
-                        >
-                          Hourly Forecast
-                        </TabsTrigger>
-                        <TabsTrigger 
-                          value="weekly" 
-                          className="flex-1 data-[state=active]:bg-white/10 data-[state=active]:text-white text-white/70"
-                        >
-                          Weekly Forecast
-                        </TabsTrigger>
+                      <TabsList className="w-full bg-white/5 border-0">
+                        <TabsTrigger value="hourly">Hourly Forecast</TabsTrigger>
+                        <TabsTrigger value="weekly">Weekly Forecast</TabsTrigger>
                       </TabsList>
                       {isTabLoading ? (
                         <LoadingCard />
                       ) : (
                         <>
-                          <TabsContent value="hourly" className="mt-0">
-                            <WeatherChart forecast={weather.forecast} />
+                          <TabsContent value="hourly">
+                            <LazyChart forecast={weather.forecast} />
                           </TabsContent>
-                          <TabsContent value="weekly" className="mt-0">
+                          <TabsContent value="weekly">
                             <WeatherForecast forecast={weather.forecast} />
                           </TabsContent>
                         </>
@@ -109,17 +90,14 @@ const Index = () => {
                   </section>
                 </div>
               ) : (
-                <section aria-label="Error Message">
-                  <motion.div 
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    className="flex flex-col items-center justify-center p-4 sm:p-8 bg-white/5 rounded-lg text-white/70"
-                  >
-                    <AlertCircle className="w-8 h-8 sm:w-12 sm:h-12 mb-4 text-red-400" />
-                    <p className="text-base sm:text-lg font-medium text-center">No weather data available</p>
-                    <p className="text-xs sm:text-sm mt-2 text-center">Please try searching for a valid location</p>
-                  </motion.div>
-                </section>
+                <motion.div 
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  className="flex flex-col items-center justify-center p-4 sm:p-8 bg-white/5 rounded-lg"
+                >
+                  <AlertCircle className="w-12 h-12 text-red-400 mb-4" />
+                  <p className="text-white/70 text-center">No weather data available</p>
+                </motion.div>
               )}
             </motion.div>
           </div>
