@@ -39,13 +39,13 @@ const Terms = () => {
                 <CardContent className="p-6">
                   <h2 className="text-2xl font-semibold text-white mb-4">1. Service Agreement</h2>
                   <div className="space-y-4 text-white/80 leading-relaxed">
-                    <p>By using ForeCastify, you agree to the following terms:</p>
+                    <p>By using ForeCastify, you agree to:</p>
                     <ul className="list-disc pl-6 space-y-2">
-                      <li>Access to real-time weather data and forecasts</li>
-                      <li>Use of location-based services for accurate predictions</li>
-                      <li>Compliance with our usage guidelines and policies</li>
-                      <li>Acceptance of our data collection practices</li>
-                      <li>Agreement to receive weather-related notifications</li>
+                      <li>Comply with all applicable laws and regulations</li>
+                      <li>Provide accurate information when required</li>
+                      <li>Use the service for personal, non-commercial purposes only</li>
+                      <li>Not attempt to circumvent any security measures</li>
+                      <li>Accept updates and modifications to the service</li>
                     </ul>
                   </div>
                 </CardContent>
@@ -55,13 +55,13 @@ const Terms = () => {
                 <CardContent className="p-6">
                   <h2 className="text-2xl font-semibold text-white mb-4">2. User Responsibilities</h2>
                   <div className="space-y-4 text-white/80 leading-relaxed">
-                    <p>As a ForeCastify user, you are responsible for:</p>
+                    <p>As a user, you are responsible for:</p>
                     <ul className="list-disc pl-6 space-y-2">
-                      <li>Providing accurate location information</li>
-                      <li>Maintaining the security of your account</li>
-                      <li>Using the service for personal, non-commercial purposes</li>
-                      <li>Not attempting to reverse engineer the service</li>
-                      <li>Reporting any security vulnerabilities or bugs</li>
+                      <li>Maintaining the confidentiality of your account</li>
+                      <li>All activities that occur under your account</li>
+                      <li>Ensuring your device meets minimum system requirements</li>
+                      <li>Reporting any security vulnerabilities or misuse</li>
+                      <li>Understanding that weather forecasts are predictions and may not be 100% accurate</li>
                     </ul>
                   </div>
                 </CardContent>
@@ -69,31 +69,31 @@ const Terms = () => {
 
               <Card className="bg-white/5 border-white/10 backdrop-blur-sm">
                 <CardContent className="p-6">
-                  <h2 className="text-2xl font-semibold text-white mb-4">3. Service Limitations</h2>
+                  <h2 className="text-2xl font-semibold text-white mb-4">3. Intellectual Property</h2>
                   <div className="space-y-4 text-white/80 leading-relaxed">
-                    <p>Please be aware of the following limitations:</p>
+                    <p>All content and features in ForeCastify are protected by:</p>
                     <ul className="list-disc pl-6 space-y-2">
-                      <li>Weather forecasts are provided "as is" without guarantees</li>
-                      <li>Service availability may vary based on location</li>
-                      <li>Data accuracy depends on third-party weather services</li>
-                      <li>Features may be modified or discontinued</li>
-                      <li>Access may be restricted during maintenance periods</li>
+                      <li>Copyright laws and international treaties</li>
+                      <li>Trademark rights and service marks</li>
+                      <li>Patents and pending patent applications</li>
+                      <li>Trade secrets and proprietary rights</li>
                     </ul>
+                    <p>You may not copy, modify, distribute, or create derivative works without our explicit permission.</p>
                   </div>
                 </CardContent>
               </Card>
 
               <Card className="bg-white/5 border-white/10 backdrop-blur-sm">
                 <CardContent className="p-6">
-                  <h2 className="text-2xl font-semibold text-white mb-4">4. Intellectual Property</h2>
+                  <h2 className="text-2xl font-semibold text-white mb-4">4. Limitation of Liability</h2>
                   <div className="space-y-4 text-white/80 leading-relaxed">
-                    <p>ForeCastify's intellectual property rights include:</p>
+                    <p>ForeCastify and its team:</p>
                     <ul className="list-disc pl-6 space-y-2">
-                      <li>All software code and algorithms</li>
-                      <li>User interface designs and graphics</li>
-                      <li>Weather data presentation formats</li>
-                      <li>Brand names, logos, and trademarks</li>
-                      <li>Documentation and marketing materials</li>
+                      <li>Provide weather data "as is" without any warranties</li>
+                      <li>Are not liable for decisions made based on our forecasts</li>
+                      <li>Do not guarantee uninterrupted or error-free service</li>
+                      <li>May experience occasional downtime for maintenance</li>
+                      <li>Reserve the right to modify or discontinue services</li>
                     </ul>
                   </div>
                 </CardContent>
@@ -103,15 +103,23 @@ const Terms = () => {
                 <CardContent className="p-6">
                   <h2 className="text-2xl font-semibold text-white mb-4">5. Termination</h2>
                   <div className="space-y-4 text-white/80 leading-relaxed">
-                    <p>ForeCastify reserves the right to:</p>
+                    <p>We reserve the right to:</p>
                     <ul className="list-disc pl-6 space-y-2">
-                      <li>Suspend or terminate accounts for violations</li>
-                      <li>Modify or discontinue services with notice</li>
-                      <li>Remove access to specific features</li>
-                      <li>Delete inactive accounts after extended periods</li>
-                      <li>Refuse service to anyone at our discretion</li>
+                      <li>Terminate or suspend accounts for violations</li>
+                      <li>Remove content that violates these terms</li>
+                      <li>Modify or discontinue services without notice</li>
+                      <li>Take legal action if necessary</li>
                     </ul>
                   </div>
+                </CardContent>
+              </Card>
+
+              <Card className="bg-white/5 border-white/10 backdrop-blur-sm">
+                <CardContent className="p-6">
+                  <h2 className="text-2xl font-semibold text-white mb-4">6. Changes to Terms</h2>
+                  <p className="text-white/80 leading-relaxed">
+                    We may update these terms at any time. Continued use of ForeCastify after changes constitutes acceptance of the new terms. For questions about these terms, contact us at legal@forecastify.com.
+                  </p>
                 </CardContent>
               </Card>
             </div>
