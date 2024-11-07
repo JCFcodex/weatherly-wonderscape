@@ -15,7 +15,7 @@ export const SearchBar = ({ onSearch }: SearchBarProps) => {
     e.preventDefault();
     if (inputValue.trim()) {
       onSearch(inputValue.trim());
-      setInputValue("");
+      setInputValue(""); // Clear input after search
     }
   };
 

@@ -1,7 +1,6 @@
 import { motion } from "framer-motion";
-import { Header } from "@/components/weather/Header";
-import { Footer } from "@/components/weather/Footer";
-
+import { Header } from "@/components/Header";
+import { Footer } from "@/components/Footer";
 import { LoadingCard } from "@/components/LoadingCard";
 import { useState, useEffect } from "react";
 
@@ -60,4 +59,3 @@ const Privacy = () => {
 };
 
 export default Privacy;
-

@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
-import { Header } from "@/components/weather/Header";
-import { Footer } from "@/components/weather/Footer";
+import { Header } from "@/components/Header";
+import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Mail, MessageSquare, Phone } from "lucide-react";
 
