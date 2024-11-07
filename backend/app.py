@@ -9,7 +9,7 @@ CORS(app)
 @app.route('/api/weather/<city>')
 def get_weather(city):
     try:
-        url = f"http://api.weatherapi.com/v1/current.json?key={WEATHER_API_KEY}&q={city}"
+        url = f"http://api.weatherapi.com/v1/forecast.json?key={WEATHER_API_KEY}&q={city}&days=7"
         response = requests.get(url)
         data = response.json()
         return jsonify(data)
@@ -24,7 +24,8 @@ def reverse_geocode(lat, lon):
         response = requests.get(url)
         data = response.json()
         if data and len(data) > 0:
-            return jsonify({"city": data[0]["name"]})
+            location_name = data[0]["name"]
+            return jsonify({"city": location_name})
         return jsonify({"city": "Manila"})
     except Exception as e:
         print(f"Error in reverse geocoding: {e}")
