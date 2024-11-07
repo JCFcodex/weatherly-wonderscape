@@ -4,7 +4,8 @@ import os
 from database.db import init_db
 from services.weather_service import get_cached_weather, cache_weather, fetch_weather_data
 
-app = Flask(__name__, static_folder='../dist', static_url_path='')
+# Update static folder path to be relative to the backend directory
+app = Flask(__name__, static_folder=os.path.join(os.path.dirname(os.path.dirname(__file__)), 'dist'), static_url_path='')
 CORS(app)
 
 @app.route('/api/weather/<query>')
