@@ -80,16 +80,16 @@ const Index = () => {
                       value={activeTab}
                       onValueChange={handleTabChange}
                     >
-                      <TabsList className="w-full bg-white/5 rounded-xl p-1.5 mb-4 grid grid-cols-2 gap-1">
+                      <TabsList className="w-full bg-white/5 rounded-2xl p-2 mb-4 flex gap-2">
                         <TabsTrigger 
                           value="hourly" 
-                          className="w-full rounded-lg py-3 text-sm font-medium transition-all data-[state=active]:bg-primary/90 data-[state=active]:text-white data-[state=active]:shadow-sm text-white/70 hover:text-white hover:bg-white/10"
+                          className="flex-1 rounded-xl py-3 text-sm font-medium transition-all duration-200 data-[state=active]:bg-[#6B85FF] data-[state=active]:text-white data-[state=active]:shadow-md text-white/70 hover:text-white hover:bg-white/5"
                         >
                           Hourly Forecast
                         </TabsTrigger>
                         <TabsTrigger 
                           value="weekly" 
-                          className="w-full rounded-lg py-3 text-sm font-medium transition-all data-[state=active]:bg-primary/90 data-[state=active]:text-white data-[state=active]:shadow-sm text-white/70 hover:text-white hover:bg-white/10"
+                          className="flex-1 rounded-xl py-3 text-sm font-medium transition-all duration-200 data-[state=active]:bg-[#6B85FF] data-[state=active]:text-white data-[state=active]:shadow-md text-white/70 hover:text-white hover:bg-white/5"
                         >
                           Weekly Forecast
                         </TabsTrigger>
