@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { SearchBar } from "@/components/SearchBar";
 import { WeatherCard } from "@/components/WeatherCard";
@@ -19,15 +19,7 @@ const Index = () => {
   const [city, setCity] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState("hourly");
   const [isTabLoading, setIsTabLoading] = useState(false);
-  const [pageLoaded, setPageLoaded] = useState(false);
   const { location, loading: locationLoading } = useGeolocation();
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setPageLoaded(true);
-    }, 1000);
-    return () => clearTimeout(timer);
-  }, []);
 
   const { data: weather, isLoading, isError } = useQuery({
     queryKey: ["weather", city, location],
@@ -54,10 +46,6 @@ const Index = () => {
       setIsTabLoading(false);
     }, 500);
   };
-
-  if (!pageLoaded) {
-    return <LoadingCard />;
-  }
 
   return (
     <ThemeProvider defaultTheme="dark" attribute="class">

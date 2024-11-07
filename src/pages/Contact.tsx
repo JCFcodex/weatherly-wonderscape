@@ -4,19 +4,8 @@ import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Mail, MessageSquare, Phone, Send, MapPin } from "lucide-react";
 import { toast } from "sonner";
-import { useState, useEffect } from "react";
-import { LoadingCard } from "@/components/LoadingCard";
 
 const Contact = () => {
-  const [pageLoaded, setPageLoaded] = useState(false);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setPageLoaded(true);
-    }, 800);
-    return () => clearTimeout(timer);
-  }, []);
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     toast.success("Message sent successfully!");
@@ -39,14 +28,6 @@ const Contact = () => {
       value: "Hagonoy, Bulacan, Philippines"
     }
   ];
-
-  if (!pageLoaded) {
-    return (
-      <div className="min-h-screen bg-[#1C1C1E]">
-        <LoadingCard />
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-[#1C1C1E] font-['Outfit'] overflow-hidden flex flex-col">

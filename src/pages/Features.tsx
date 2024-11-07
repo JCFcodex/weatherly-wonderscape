@@ -2,19 +2,8 @@ import { motion } from "framer-motion";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Cloud, Sun, Wind, Droplets, ThermometerSun, Lock, Crown, Bell, Smartphone, Map, Zap, MessageSquare } from "lucide-react";
-import { useState, useEffect } from "react";
-import { LoadingCard } from "@/components/LoadingCard";
 
 const Features = () => {
-  const [pageLoaded, setPageLoaded] = useState(false);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setPageLoaded(true);
-    }, 800);
-    return () => clearTimeout(timer);
-  }, []);
-
   const features = [
     {
       icon: <ThermometerSun className="w-6 h-6 sm:w-8 sm:h-8 text-weather-sunny" />,
@@ -76,14 +65,6 @@ const Features = () => {
       comingSoon: true
     }
   ];
-
-  if (!pageLoaded) {
-    return (
-      <div className="min-h-screen bg-[#1C1C1E]">
-        <LoadingCard />
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-[#1C1C1E] font-['Outfit'] overflow-hidden flex flex-col">

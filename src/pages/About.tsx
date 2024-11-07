@@ -2,19 +2,8 @@ import { motion } from "framer-motion";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Cloud, Sun, Wind, Droplets, Users, Target, Award } from "lucide-react";
-import { useState, useEffect } from "react";
-import { LoadingCard } from "@/components/LoadingCard";
 
 const About = () => {
-  const [pageLoaded, setPageLoaded] = useState(false);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setPageLoaded(true);
-    }, 800);
-    return () => clearTimeout(timer);
-  }, []);
-
   const teamValues = [
     {
       icon: <Target className="w-6 h-6 text-blue-400" />,
@@ -55,14 +44,6 @@ const About = () => {
       description: "Comprehensive weather data"
     }
   ];
-
-  if (!pageLoaded) {
-    return (
-      <div className="min-h-screen bg-[#1C1C1E]">
-        <LoadingCard />
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-[#1C1C1E] font-['Outfit'] overflow-hidden flex flex-col">
