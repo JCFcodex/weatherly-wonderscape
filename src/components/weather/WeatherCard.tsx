@@ -1,3 +1,4 @@
+// Moving weather components to dedicated folder
 import { Card } from "@/components/ui/card";
 import { WeatherIcon } from "./WeatherIcon";
 import { WeatherData } from "@/services/weatherApi";
@@ -26,10 +27,7 @@ export const WeatherCard = ({ weather }: WeatherCardProps) => {
           <div>
             <div className="flex items-center space-x-2">
               <WeatherIcon condition={weather.current.condition.text} className="w-5 h-5 sm:w-6 sm:h-6 text-white/70" />
-              <div>
-                <h2 className="text-lg sm:text-xl font-medium text-white/90">{weather.location.name}</h2>
-                <p className="text-sm text-white/50">{weather.location.country}</p>
-              </div>
+              <h2 className="text-lg sm:text-xl font-medium text-white/90">{weather.location.name}</h2>
             </div>
             <p className="text-white/50 mt-1 text-xs sm:text-sm">{date}</p>
           </div>
