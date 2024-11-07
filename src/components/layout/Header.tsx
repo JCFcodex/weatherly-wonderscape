@@ -1,7 +1,6 @@
-// Moving Header to layout folder
 import { Cloud, Sun, Menu, X } from "lucide-react";
 import { motion } from "framer-motion";
-import { Button } from "./ui/button";
+import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
