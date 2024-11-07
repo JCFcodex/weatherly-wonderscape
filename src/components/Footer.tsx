@@ -27,21 +27,43 @@ export const Footer = () => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.2 }}
-      className="w-full py-6 mt-auto bg-gradient-to-b from-[#1C1C1E] to-[#2C2C2E] border-t border-white/10"
+      className="w-full py-8 mt-auto bg-gradient-to-b from-[#1C1C1E]/95 to-[#2C2C2E] border-t border-white/10 backdrop-blur-sm"
     >
       <div className="container mx-auto px-4">
-        <div className="flex flex-wrap items-center justify-between gap-4">
-          {/* Copyright and Quick Links */}
-          <div className="flex flex-wrap items-center gap-6">
-            <p className="text-sm text-white/60">
-              © 2024 ForeCastify
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {/* Brand Section */}
+          <div className="space-y-4">
+            <h3 className="text-lg font-semibold text-white">ForeCastify</h3>
+            <p className="text-sm text-white/60 leading-relaxed">
+              Your trusted companion for accurate weather forecasts and real-time updates worldwide.
             </p>
-            <div className="flex items-center gap-4">
-              {["About", "Features", "Contact", "Terms", "Privacy"].map((item) => (
+          </div>
+
+          {/* Quick Links */}
+          <div className="space-y-4">
+            <h3 className="text-lg font-semibold text-white">Quick Links</h3>
+            <div className="flex flex-col space-y-2">
+              {["About", "Features", "Contact"].map((item) => (
                 <button
                   key={item}
                   onClick={() => handleNavigation(`/${item.toLowerCase()}`)}
-                  className="text-sm text-white/60 hover:text-white transition-colors"
+                  className="text-sm text-white/60 hover:text-white transition-colors text-left w-fit"
+                >
+                  {item}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Legal Links */}
+          <div className="space-y-4">
+            <h3 className="text-lg font-semibold text-white">Legal</h3>
+            <div className="flex flex-col space-y-2">
+              {["Terms", "Privacy"].map((item) => (
+                <button
+                  key={item}
+                  onClick={() => handleNavigation(`/${item.toLowerCase()}`)}
+                  className="text-sm text-white/60 hover:text-white transition-colors text-left w-fit"
                 >
                   {item}
                 </button>
@@ -50,19 +72,29 @@ export const Footer = () => {
           </div>
 
           {/* Social Links */}
-          <div className="flex items-center gap-3">
-            {socialLinks.map(({ icon: Icon, href }) => (
-              <a
-                key={href}
-                href={href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/10 flex items-center justify-center group transition-all duration-300"
-              >
-                <Icon className="w-4 h-4 text-white/60 group-hover:text-primary transition-colors" />
-              </a>
-            ))}
+          <div className="space-y-4">
+            <h3 className="text-lg font-semibold text-white">Connect With Us</h3>
+            <div className="flex flex-wrap gap-3">
+              {socialLinks.map(({ icon: Icon, href }) => (
+                <a
+                  key={href}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-9 h-9 rounded-lg bg-white/5 hover:bg-white/10 flex items-center justify-center group transition-all duration-300"
+                >
+                  <Icon className="w-4 h-4 text-white/60 group-hover:text-primary transition-colors" />
+                </a>
+              ))}
+            </div>
           </div>
+        </div>
+
+        {/* Copyright */}
+        <div className="mt-8 pt-6 border-t border-white/10">
+          <p className="text-sm text-center text-white/60">
+            © {new Date().getFullYear()} ForeCastify. All rights reserved.
+          </p>
         </div>
       </div>
     </motion.footer>
