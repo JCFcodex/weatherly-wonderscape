@@ -40,7 +40,7 @@ const Index = () => {
 
   return (
     <ThemeProvider defaultTheme="dark" attribute="class">
-      <div className="min-h-screen flex flex-col bg-[#1C1C1E] dark:bg-[#1C1C1E] font-['Outfit'] overflow-x-hidden">
+      <div className="min-h-screen flex flex-col bg-[#1C1C1E] dark:bg-[#1C1C1E] font-['Outfit']">
         <Helmet>
           <title>ForeCastify - Weather Forecast for {city}</title>
           <meta name="description" content={`Get real-time weather updates and forecast for ${city}. View temperature, humidity, wind speed, and more.`} />
@@ -49,12 +49,12 @@ const Index = () => {
         </Helmet>
         <Header />
         <main className="flex-1 px-4 sm:px-6 lg:px-8 py-4 sm:py-6 mt-20 sm:mt-24">
-          <div className="max-w-[1200px] mx-auto">
+          <div className="max-w-[1200px] mx-auto h-full flex flex-col">
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="space-y-4"
+              className="space-y-4 flex-1"
             >
               <section aria-label="Weather Search">
                 <h1 className="sr-only">Weather Forecast for {city}</h1>
@@ -62,7 +62,7 @@ const Index = () => {
               </section>
 
               {isLoading ? (
-                <section aria-label="Loading Weather Data">
+                <section aria-label="Loading Weather Data" className="flex-1">
                   <LoadingCard />
                 </section>
               ) : weather && !isError ? (
@@ -109,7 +109,7 @@ const Index = () => {
                   </section>
                 </div>
               ) : (
-                <section aria-label="Error Message">
+                <section aria-label="Error Message" className="flex-1">
                   <motion.div 
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
