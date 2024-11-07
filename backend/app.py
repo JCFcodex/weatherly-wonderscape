@@ -7,27 +7,32 @@ from services.weather_service import get_cached_weather, cache_weather, fetch_we
 app = Flask(__name__, static_folder='../dist', static_url_path='')
 CORS(app)
 
-@app.route('/api/weather/<city>')
-def get_weather(city):
+@app.route('/api/weather/<query>')
+def get_weather(query):
     try:
-        cached_data = get_cached_weather(city)
+        # Check if query is coordinates (contains comma)
+        if ',' in query:
+            lat, lon = query.split(',')
+            query = f"{lat},{lon}"  # WeatherAPI accepts coordinates in this format
+        
+        cached_data = get_cached_weather(query)
         if cached_data:
             response = make_response(jsonify(cached_data))
             response.headers['Cache-Control'] = f'public, max-age={1800}'
             return response
 
-        response = fetch_weather_data(city)
+        response = fetch_weather_data(query)
         
         if response.status_code == 200:
             weather_data = response.json()
-            cache_weather(city, weather_data)
+            cache_weather(query, weather_data)
             
             response = make_response(jsonify(weather_data))
             response.headers['Cache-Control'] = f'public, max-age={1800}'
             return response
             
         elif response.status_code == 400:
-            return jsonify({'error': 'City not found'}), 404
+            return jsonify({'error': 'Location not found'}), 404
         else:
             return jsonify({'error': 'Weather service unavailable'}), 503
 
