@@ -4,8 +4,11 @@ import os
 from database.db import init_db
 from services.weather_service import get_cached_weather, cache_weather, fetch_weather_data
 
-# Update static folder path to be relative to the backend directory
-app = Flask(__name__, static_folder=os.path.join(os.path.dirname(os.path.dirname(__file__)), 'dist'), static_url_path='')
+# Get the absolute path to the dist directory
+current_dir = os.path.dirname(os.path.abspath(__file__))
+dist_dir = os.path.join(os.path.dirname(current_dir), 'dist')
+
+app = Flask(__name__, static_folder=dist_dir, static_url_path='')
 CORS(app)
 
 @app.route('/api/weather/<query>')
@@ -46,9 +49,12 @@ def get_weather(query):
 def serve(path):
     if path.startswith('api/'):
         return jsonify({'error': 'Not found'}), 404
-    if os.path.exists(os.path.join(app.static_folder, path)):
-        return send_from_directory(app.static_folder, path)
-    return send_from_directory(app.static_folder, 'index.html')
+    try:
+        if os.path.exists(os.path.join(dist_dir, path)):
+            return send_from_directory(dist_dir, path)
+        return send_from_directory(dist_dir, 'index.html')
+    except Exception as e:
+        return str(e), 500
 
 if __name__ == '__main__':
     init_db()
