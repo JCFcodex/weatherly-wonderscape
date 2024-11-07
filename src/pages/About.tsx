@@ -1,8 +1,50 @@
 import { motion } from "framer-motion";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { Cloud, Sun, Wind, Droplets, Users, Target, Award } from "lucide-react";
 
 const About = () => {
+  const teamValues = [
+    {
+      icon: <Target className="w-6 h-6 text-blue-400" />,
+      title: "Our Mission",
+      description: "Providing accurate and reliable weather information to help you plan your day with confidence."
+    },
+    {
+      icon: <Users className="w-6 h-6 text-purple-400" />,
+      title: "Our Team",
+      description: "A dedicated group of meteorologists and developers working to deliver the best weather forecasting experience."
+    },
+    {
+      icon: <Award className="w-6 h-6 text-green-400" />,
+      title: "Our Commitment",
+      description: "Continuous improvement and innovation in weather forecasting technology."
+    }
+  ];
+
+  const technologies = [
+    {
+      icon: <Sun className="w-6 h-6 text-weather-sunny" />,
+      title: "Advanced Algorithms",
+      description: "State-of-the-art weather prediction models"
+    },
+    {
+      icon: <Cloud className="w-6 h-6 text-weather-cloudy" />,
+      title: "Cloud Computing",
+      description: "Powerful infrastructure for real-time updates"
+    },
+    {
+      icon: <Wind className="w-6 h-6 text-primary" />,
+      title: "Data Analysis",
+      description: "Comprehensive weather pattern analysis"
+    },
+    {
+      icon: <Droplets className="w-6 h-6 text-weather-rainy" />,
+      title: "Precision Metrics",
+      description: "Accurate precipitation forecasting"
+    }
+  ];
+
   return (
     <div className="min-h-screen bg-[#1C1C1E] font-['Outfit'] overflow-hidden flex flex-col">
       <Header />
@@ -12,65 +54,67 @@ const About = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="space-y-6 sm:space-y-8"
+            className="space-y-12"
           >
-            <div className="text-center space-y-3 sm:space-y-4">
-              <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-                About ForeCastify
-              </h1>
-              <p className="text-white/70 max-w-2xl mx-auto text-sm sm:text-base">
-                Your trusted companion for accurate weather forecasts and real-time updates
-              </p>
-            </div>
-
-            <div className="grid md:grid-cols-2 gap-4 sm:gap-6 md:gap-8 mt-8 sm:mt-12">
-              <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.2 }}
-                className="bg-white/5 p-4 sm:p-6 rounded-lg"
-              >
-                <h2 className="text-lg sm:text-xl font-semibold text-white mb-3 sm:mb-4">Our Mission</h2>
-                <p className="text-white/70 text-sm sm:text-base">
-                  At ForeCastify, we strive to provide the most accurate and reliable weather 
-                  information to help you plan your day with confidence. Our advanced 
-                  forecasting technology ensures you're always prepared for whatever 
-                  weather comes your way.
-                </p>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.4 }}
-                className="bg-white/5 p-4 sm:p-6 rounded-lg"
-              >
-                <h2 className="text-lg sm:text-xl font-semibold text-white mb-3 sm:mb-4">Why Choose Us</h2>
-                <ul className="text-white/70 space-y-2 text-sm sm:text-base">
-                  <li>• Real-time weather updates</li>
-                  <li>• Accurate hourly forecasts</li>
-                  <li>• Detailed weather information</li>
-                  <li>• User-friendly interface</li>
-                  <li>• Global coverage</li>
-                </ul>
-              </motion.div>
-
-              <motion.div
+            <div className="text-center space-y-3">
+              <motion.h1 
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.6 }}
-                className="bg-white/5 p-4 sm:p-6 rounded-lg md:col-span-2"
+                transition={{ delay: 0.2 }}
+                className="text-3xl sm:text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent"
               >
-                <h2 className="text-lg sm:text-xl font-semibold text-white mb-3 sm:mb-4">Our Technology</h2>
-                <p className="text-white/70 text-sm sm:text-base">
-                  ForeCastify is powered by <a href="https://www.weatherapi.com" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">WeatherAPI.com</a>, 
-                  a leading provider of weather data. This integration allows us to deliver highly accurate 
-                  weather forecasts, real-time updates, and detailed weather information for locations worldwide. 
-                  We combine this powerful API with our user-friendly interface to give you the best weather 
-                  forecasting experience possible.
-                </p>
-              </motion.div>
+                About ForeCastify
+              </motion.h1>
+              <motion.p 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.3 }}
+                className="text-white/70 max-w-2xl mx-auto text-sm sm:text-base"
+              >
+                Your trusted companion for accurate weather forecasts and real-time updates
+              </motion.p>
             </div>
+
+            <div className="grid md:grid-cols-3 gap-6">
+              {teamValues.map((value, index) => (
+                <motion.div
+                  key={value.title}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.2 + index * 0.1 }}
+                  className="bg-white/5 p-6 rounded-xl backdrop-blur-sm hover:bg-white/10 transition-colors"
+                >
+                  <div className="bg-white/10 p-3 rounded-lg w-fit mb-4">
+                    {value.icon}
+                  </div>
+                  <h3 className="text-xl font-semibold text-white mb-2">{value.title}</h3>
+                  <p className="text-white/70">{value.description}</p>
+                </motion.div>
+              ))}
+            </div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5 }}
+              className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6"
+            >
+              {technologies.map((tech, index) => (
+                <motion.div
+                  key={tech.title}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.6 + index * 0.1 }}
+                  className="bg-white/5 p-4 rounded-lg text-center hover:bg-white/10 transition-colors"
+                >
+                  <div className="bg-white/10 p-3 rounded-lg w-fit mx-auto mb-3">
+                    {tech.icon}
+                  </div>
+                  <h3 className="text-white font-medium mb-1">{tech.title}</h3>
+                  <p className="text-white/60 text-sm">{tech.description}</p>
+                </motion.div>
+              ))}
+            </motion.div>
           </motion.div>
         </div>
       </main>
