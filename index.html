@@ -4,6 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ForeCastify - Real-time Weather Updates & Accurate Weather Forecasts</title>
+  
+  <!-- Preconnect to critical origins -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  
+  <!-- Preload critical assets -->
+  <link rel="preload" href="/src/assets/forecastify-logo.png" as="image">
+  
   <link rel="icon" type="image/svg+xml" href="/src/assets/forecastify-logo.png" />
   <meta name="description" content="Get accurate real-time weather updates, hourly forecasts, and weekly weather predictions for any location worldwide. Features detailed temperature trends, wind speed monitoring, humidity levels, and air quality index tracking." />
   <meta name="keywords" content="weather forecast, real-time weather, temperature, humidity, wind speed, air quality, weather dashboard, weather app, weather prediction, local weather, global weather, weather alerts, weather monitoring" />
@@ -30,8 +38,11 @@
   <!-- Canonical URL -->
   <link rel="canonical" href="https://forecastify.com" />
   
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <!-- Optimized font loading -->
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+  </noscript>
 
   <!-- JSON-LD Structured Data -->
   <script type="application/ld+json">

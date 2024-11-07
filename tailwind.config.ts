@@ -8,13 +8,23 @@ export default {
     "./app/**/*.{ts,tsx}",
     "./src/**/*.{ts,tsx}",
   ],
+  future: {
+    hoverOnlyWhenSupported: true,
+  },
   prefix: "",
   theme: {
     container: {
       center: true,
-      padding: "2rem",
+      padding: {
+        DEFAULT: '1rem',
+        sm: '2rem',
+      },
       screens: {
-        "2xl": "1400px",
+        sm: '640px',
+        md: '768px',
+        lg: '1024px',
+        xl: '1280px',
+        '2xl': '1400px',
       },
     },
     extend: {
@@ -58,5 +68,19 @@ export default {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [
+    require("tailwindcss-animate"),
+    function({ addBase, theme }: any) {
+      addBase({
+        // Optimize touch targets for mobile
+        'button, a': {
+          'min-height': '44px',
+          'min-width': '44px',
+          'display': 'inline-flex',
+          'align-items': 'center',
+          'justify-content': 'center',
+        },
+      });
+    },
+  ],
 } satisfies Config;
