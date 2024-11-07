@@ -18,46 +18,56 @@ import { toast } from "sonner";
 const DEFAULT_CITY = "Manila, Philippines";
 
 const Index = () => {
-  const [city, setCity] = useState(DEFAULT_CITY);
+  const [city, setCity] = useState(() => localStorage.getItem('userCity') || DEFAULT_CITY);
   const [activeTab, setActiveTab] = useState("hourly");
   const [isTabLoading, setIsTabLoading] = useState(false);
 
   useEffect(() => {
-    const getUserLocation = () => {
-      if ("geolocation" in navigator) {
-        navigator.geolocation.getCurrentPosition(
-          async (position) => {
-            try {
-              const response = await fetch(
-                `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${position.coords.latitude}&longitude=${position.coords.longitude}&localityLanguage=en`
-              );
-              const data = await response.json();
-              if (data.city) {
-                setCity(data.city);
-                toast.success("Using your current location");
-              } else {
+    const locationQueried = localStorage.getItem('locationQueried');
+    
+    if (!locationQueried) {
+      const getUserLocation = () => {
+        if ("geolocation" in navigator) {
+          navigator.geolocation.getCurrentPosition(
+            async (position) => {
+              try {
+                const response = await fetch(
+                  `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${position.coords.latitude}&longitude=${position.coords.longitude}&localityLanguage=en`
+                );
+                const data = await response.json();
+                if (data.city) {
+                  setCity(data.city);
+                  localStorage.setItem('userCity', data.city);
+                  toast.success("Using your current location");
+                } else {
+                  setCity(DEFAULT_CITY);
+                  localStorage.setItem('userCity', DEFAULT_CITY);
+                  toast.error("Couldn't determine your city, using default location");
+                }
+              } catch (error) {
+                console.error("Error getting location:", error);
                 setCity(DEFAULT_CITY);
-                toast.error("Couldn't determine your city, using default location");
+                localStorage.setItem('userCity', DEFAULT_CITY);
+                toast.error("Error getting location, using default location");
               }
-            } catch (error) {
-              console.error("Error getting location:", error);
+            },
+            (error) => {
+              console.error("Geolocation error:", error);
               setCity(DEFAULT_CITY);
-              toast.error("Error getting location, using default location");
+              localStorage.setItem('userCity', DEFAULT_CITY);
+              toast.error("Location access denied, using default location");
             }
-          },
-          (error) => {
-            console.error("Geolocation error:", error);
-            setCity(DEFAULT_CITY);
-            toast.error("Location access denied, using default location");
-          }
-        );
-      } else {
-        setCity(DEFAULT_CITY);
-        toast.error("Geolocation not supported, using default location");
-      }
-    };
+          );
+        } else {
+          setCity(DEFAULT_CITY);
+          localStorage.setItem('userCity', DEFAULT_CITY);
+          toast.error("Geolocation not supported, using default location");
+        }
+      };
 
-    getUserLocation();
+      getUserLocation();
+      localStorage.setItem('locationQueried', 'true');
+    }
   }, []);
 
   const { data: weather, isLoading, isError } = useQuery({
@@ -69,6 +79,7 @@ const Index = () => {
 
   const handleSearch = (newCity: string) => {
     setCity(newCity);
+    localStorage.setItem('userCity', newCity);
   };
 
   const handleTabChange = (value: string) => {
@@ -165,6 +176,7 @@ const Index = () => {
       </div>
     </ThemeProvider>
   );
+
 };
 
 export default Index;
