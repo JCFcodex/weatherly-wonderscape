@@ -11,7 +11,7 @@ export const WeatherForecast = ({ forecast }: WeatherForecastProps) => {
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.3, delay: 0.2 }}
+      transition={{ duration: 0.5, delay: 0.2 }}
       className="w-full"
     >
       <Card className="w-full p-4 sm:p-6 bg-[#2C2C2E]/80 backdrop-blur-xl rounded-3xl border-0">
@@ -22,8 +22,12 @@ export const WeatherForecast = ({ forecast }: WeatherForecastProps) => {
               key={day.date}
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.3, delay: index * 0.1 }}
-              className="flex items-center justify-between p-2 sm:p-3 rounded-xl bg-white/5"
+              transition={{ 
+                duration: 0.5,
+                delay: index * 0.1,
+                ease: "easeOut"
+              }}
+              className="flex items-center justify-between p-2 sm:p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors duration-300"
             >
               <div className="flex items-center gap-2 sm:gap-4">
                 <span className="text-white/70 text-sm sm:text-base min-w-[90px] sm:min-w-[100px]">
