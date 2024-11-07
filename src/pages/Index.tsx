@@ -47,8 +47,6 @@ const Index = () => {
     }, 500);
   };
 
-  const isInitialLoading = locationLoading || (isLoading && !city && !weather);
-
   return (
     <ThemeProvider defaultTheme="dark" attribute="class">
       <div className="min-h-screen flex flex-col bg-[#1C1C1E] dark:bg-[#1C1C1E] font-['Outfit']">
@@ -72,7 +70,7 @@ const Index = () => {
                 <SearchBar onSearch={handleSearch} />
               </section>
 
-              {isInitialLoading ? (
+              {isLoading ? (
                 <LoadingCard />
               ) : weather && !isError ? (
                 <div className="grid lg:grid-cols-12 gap-3 sm:gap-4">
@@ -115,7 +113,7 @@ const Index = () => {
                     </Tabs>
                   </section>
                 </div>
-              ) : (
+              ) : city ? (
                 <section aria-label="Error Message" className="flex-1">
                   <motion.div 
                     initial={{ opacity: 0 }}
@@ -127,7 +125,7 @@ const Index = () => {
                     <p className="text-xs sm:text-sm mt-2 text-center">Please try searching for a location</p>
                   </motion.div>
                 </section>
-              )}
+              ) : null}
             </motion.div>
           </div>
         </main>
