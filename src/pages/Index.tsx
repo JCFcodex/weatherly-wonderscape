@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { SearchBar } from "@/components/SearchBar";
 import { WeatherCard } from "@/components/WeatherCard";
@@ -13,55 +13,11 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { ThemeProvider } from "next-themes";
 import { Helmet } from "react-helmet";
-import { useToast } from "@/hooks/use-toast";
 
 const Index = () => {
   const [city, setCity] = useState("Manila");
   const [activeTab, setActiveTab] = useState("hourly");
   const [isTabLoading, setIsTabLoading] = useState(false);
-  const { toast } = useToast();
-
-  useEffect(() => {
-    const getUserLocation = async () => {
-      if ("geolocation" in navigator) {
-        try {
-          const position = await new Promise((resolve, reject) => {
-            navigator.geolocation.getCurrentPosition(resolve, reject);
-          });
-
-          const { latitude, longitude } = position.coords;
-          
-          // Use reverse geocoding to get city name
-          const response = await fetch(
-            `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`
-          );
-          const data = await response.json();
-          
-          if (data.city) {
-            setCity(data.city);
-            toast({
-              title: "Location detected",
-              description: `Using your current location: ${data.city}`,
-            });
-          }
-        } catch (error) {
-          toast({
-            title: "Location access denied",
-            description: "Using default location: Manila",
-            variant: "destructive",
-          });
-        }
-      } else {
-        toast({
-          title: "Geolocation not supported",
-          description: "Using default location: Manila",
-          variant: "destructive",
-        });
-      }
-    };
-
-    getUserLocation();
-  }, []);
 
   const { data: weather, isLoading, isError } = useQuery({
     queryKey: ["weather", city],
