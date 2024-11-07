@@ -4,11 +4,11 @@ import { motion } from "framer-motion";
 
 export const LoadingCard = () => {
   return (
-    <Card className="w-full p-8 bg-[#2C2C2E]/80 backdrop-blur-xl rounded-3xl border-0">
+    <Card className="w-full h-[300px] p-8 bg-[#2C2C2E]/80 backdrop-blur-xl rounded-3xl border-0">
       <motion.div 
         animate={{ rotate: 360 }}
         transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-        className="flex justify-center py-12"
+        className="flex justify-center items-center h-full"
       >
         <Loader2 className="w-12 h-12 text-white/40" />
       </motion.div>
