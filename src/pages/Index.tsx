@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { SearchBar } from "@/components/SearchBar";
 import { WeatherCard } from "@/components/WeatherCard";
@@ -34,13 +34,19 @@ const Index = () => {
       return null;
     },
     enabled: !!city || !!location,
-    onSuccess: () => {
+  });
+
+  // Handle success effect separately
+  useEffect(() => {
+    if (weather) {
       // Set initial load to false after data is fetched
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         setIsInitialLoad(false);
       }, 1500); // Add a minimum loading time for smooth transition
-    },
-  });
+
+      return () => clearTimeout(timer);
+    }
+  }, [weather]);
 
   const handleSearch = (newCity: string) => {
     setCity(newCity);
