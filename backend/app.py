@@ -39,18 +39,15 @@ def get_weather(query):
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-@app.route('/')
-def serve_frontend():
-    response = make_response(send_from_directory(app.static_folder, 'index.html'))
-    response.headers['Cache-Control'] = 'public, max-age=3600'
-    return response
-
+# Serve static files from the dist directory
+@app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
-def serve_static(path):
-    response = make_response(send_from_directory(app.static_folder, path))
-    if path.endswith(('.js', '.css', '.png', '.jpg', '.jpeg', '.gif', '.svg')):
-        response.headers['Cache-Control'] = 'public, max-age=31536000'
-    return response
+def serve(path):
+    if path.startswith('api/'):
+        return jsonify({'error': 'Not found'}), 404
+    if path and os.path.exists(os.path.join(app.static_folder, path)):
+        return send_from_directory(app.static_folder, path)
+    return send_from_directory(app.static_folder, 'index.html')
 
 if __name__ == '__main__':
     init_db()
