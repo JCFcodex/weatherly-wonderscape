@@ -2,11 +2,12 @@ import { Cloud, Sun, Menu, X } from "lucide-react";
 import { motion } from "framer-motion";
 import { Button } from "./ui/button";
 import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 export const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
 
   const navItems = [
     { name: "Home", path: "/" },
@@ -17,6 +18,13 @@ export const Header = () => {
 
   const isActive = (path: string) => location.pathname === path;
 
+  const handleNavigation = (path: string) => {
+    if (location.pathname !== path) {
+      navigate(path, { replace: true });
+    }
+    setIsMenuOpen(false);
+  };
+
   return (
     <motion.header 
       initial={{ opacity: 0, y: -20 }}
@@ -24,7 +32,7 @@ export const Header = () => {
       className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-[#1C1C1E]/80 border-b border-white/10"
     >
       <div className="flex items-center justify-between max-w-[1200px] mx-auto px-4 py-4">
-        <Link to="/" className="flex items-center gap-2">
+        <div onClick={() => handleNavigation("/")} className="flex items-center gap-2 cursor-pointer">
           <div className="flex">
             <Sun className="w-5 h-5 sm:w-6 sm:h-6 text-weather-sunny animate-pulse" />
             <Cloud className="w-5 h-5 sm:w-6 sm:h-6 text-weather-cloudy -ml-2" />
@@ -32,14 +40,14 @@ export const Header = () => {
           <h1 className="text-lg sm:text-2xl font-semibold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
             ForeCastify
           </h1>
-        </Link>
+        </div>
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center gap-6">
           {navItems.map((item) => (
-            <Link
+            <button
               key={item.path}
-              to={item.path}
+              onClick={() => handleNavigation(item.path)}
               className={`text-sm font-medium transition-colors hover:text-primary ${
                 isActive(item.path) 
                   ? "text-primary" 
@@ -47,7 +55,7 @@ export const Header = () => {
               }`}
             >
               {item.name}
-            </Link>
+            </button>
           ))}
         </nav>
 
@@ -71,18 +79,17 @@ export const Header = () => {
           >
             <nav className="flex flex-col p-4 space-y-4">
               {navItems.map((item) => (
-                <Link
+                <button
                   key={item.path}
-                  to={item.path}
-                  onClick={() => setIsMenuOpen(false)}
-                  className={`text-sm font-medium transition-colors ${
+                  onClick={() => handleNavigation(item.path)}
+                  className={`text-sm font-medium transition-colors text-left ${
                     isActive(item.path) 
                       ? "text-primary" 
                       : "text-white/70 hover:text-white"
                   }`}
                 >
                   {item.name}
-                </Link>
+                </button>
               ))}
             </nav>
           </motion.div>
