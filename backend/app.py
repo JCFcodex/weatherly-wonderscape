@@ -6,23 +6,37 @@ import os
 import json
 from datetime import datetime, timedelta
 from dotenv import load_dotenv
-from functools import lru_cache
 
 load_dotenv()
 
 app = Flask(__name__, static_folder='../dist', static_url_path='')
 CORS(app)
+
 API_KEY = os.getenv('WEATHER_API_KEY' or '95225f90a68140d9bdb120731240511')
 WEATHER_API_URL = "https://api.weatherapi.com/v1/forecast.json"
 
-def get_db():
+def init_db():
     conn = sqlite3.connect('weather.db')
-    conn.row_factory = sqlite3.Row
-    return conn
+    c = conn.cursor()
+    c.execute('''
+        CREATE TABLE IF NOT EXISTS weather_cache (
+            city TEXT PRIMARY KEY,
+            data TEXT,
+            timestamp DATETIME
+        )
+    ''')
+    c.execute('''
+        CREATE TABLE IF NOT EXISTS recent_searches (
+            city TEXT,
+            timestamp DATETIME,
+            PRIMARY KEY (city)
+        )
+    ''')
+    conn.commit()
+    conn.close()
 
-@lru_cache(maxsize=100)
 def get_cached_weather(city):
-    conn = get_db()
+    conn = sqlite3.connect('weather.db')
     c = conn.cursor()
     c.execute('SELECT data, timestamp FROM weather_cache WHERE city = ?', (city.lower(),))
     result = c.fetchone()
@@ -33,39 +47,68 @@ def get_cached_weather(city):
     return None
 
 def cache_weather(city, data):
-    conn = get_db()
+    conn = sqlite3.connect('weather.db')
     c = conn.cursor()
     c.execute('INSERT OR REPLACE INTO weather_cache (city, data, timestamp) VALUES (?, ?, ?)',
               (city.lower(), json.dumps(data), datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
     conn.commit()
     conn.close()
 
+def update_recent_searches(city):
+    conn = sqlite3.connect('weather.db')
+    c = conn.cursor()
+    c.execute('INSERT OR REPLACE INTO recent_searches (city, timestamp) VALUES (?, ?)',
+              (city.lower(), datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
+    conn.commit()
+    conn.close()
+
 @app.route('/api/weather/<city>')
 def get_weather(city):
-    cached = get_cached_weather(city)
-    if cached:
-        return jsonify(cached)
-
     try:
-        response = requests.get(WEATHER_API_URL, 
-            params={'key': API_KEY, 'q': city, 'days': 7, 'aqi': 'no'},
-            timeout=5
-        )
+        cached_data = get_cached_weather(city)
+        if cached_data:
+            return jsonify(cached_data)
+
+        params = {
+            'key': API_KEY,
+            'q': city,
+            'days': 7,
+            'aqi': 'no'
+        }
+        
+        response = requests.get(WEATHER_API_URL, params=params)
         
         if response.status_code == 200:
             weather_data = response.json()
             cache_weather(city, weather_data)
+            update_recent_searches(city)
             return jsonify(weather_data)
-        return jsonify({'error': 'City not found'}), 404
+        elif response.status_code == 400:
+            return jsonify({'error': 'City not found. Please enter a valid city name.'}), 404
+        else:
+            return jsonify({'error': 'Weather service is temporarily unavailable.'}), 503
 
-    except requests.Timeout:
-        return jsonify({'error': 'Request timeout'}), 408
     except Exception as e:
-        return jsonify({'error': str(e)}), 500
+        return jsonify({'error': 'An unexpected error occurred. Please try again later.'}), 500
+
+@app.route('/api/recent-searches')
+def get_recent_searches():
+    conn = sqlite3.connect('weather.db')
+    c = conn.cursor()
+    c.execute('SELECT city FROM recent_searches ORDER BY timestamp DESC LIMIT 5')
+    recent = [row[0] for row in c.fetchall()]
+    conn.close()
+    return jsonify(recent)
 
 @app.route('/')
-def serve():
+def serve_frontend():
+    return send_from_directory(app.static_folder, 'index.html')
+
+@app.errorhandler(404)
+def not_found(e):
     return send_from_directory(app.static_folder, 'index.html')
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=int(os.getenv("PORT", 5000)))
+    init_db()
+    port = int(os.getenv("PORT", 5000))
+    app.run(host="0.0.0.0", port=port, debug=False)

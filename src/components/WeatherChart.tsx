@@ -6,7 +6,7 @@ interface WeatherChartProps {
   forecast: any;
 }
 
-const WeatherChart = ({ forecast }: WeatherChartProps) => {
+export const WeatherChart = ({ forecast }: WeatherChartProps) => {
   const data = forecast.forecastday[0].hour.map((hour: any) => ({
     time: new Date(hour.time).getHours(),
     temp: Math.round(hour.temp_c),
@@ -77,5 +77,3 @@ const WeatherChart = ({ forecast }: WeatherChartProps) => {
     </motion.div>
   );
 };
-
-export default WeatherChart;

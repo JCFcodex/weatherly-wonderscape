@@ -1,8 +1,6 @@
 import { toast } from "sonner";
 
-const BASE_URL = import.meta.env.PROD 
-  ? "https://api.forecastify.com/api"  // Production URL
-  : "http://localhost:5000/api";       // Development URL
+const BASE_URL = "http://localhost:5000/api";
 
 export interface WeatherData {
   location: {
