@@ -39,3 +39,14 @@ export const fetchWeatherData = async (city: string): Promise<WeatherData> => {
   }
   return response.json();
 };
+
+export const getCityFromCoords = async (latitude: number, longitude: number): Promise<string> => {
+  try {
+    const response = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`);
+    const data = await response.json();
+    return data.city || 'Manila';
+  } catch (error) {
+    console.error('Error getting city name:', error);
+    return 'Manila';
+  }
+}

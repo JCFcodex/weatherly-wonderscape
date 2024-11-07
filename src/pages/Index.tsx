@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { SearchBar } from "@/components/SearchBar";
 import { WeatherCard } from "@/components/WeatherCard";
 import { WeatherChart } from "@/components/WeatherChart";
 import { WeatherForecast } from "@/components/WeatherForecast";
-import { fetchWeatherData } from "@/services/weatherApi";
+import { fetchWeatherData, getCityFromCoords } from "@/services/weatherApi";
 import { LoadingCard } from "@/components/LoadingCard";
 import { motion } from "framer-motion";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -13,11 +13,51 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { ThemeProvider } from "next-themes";
 import { Helmet } from "react-helmet";
+import { toast } from "sonner";
 
 const Index = () => {
   const [city, setCity] = useState("Manila");
   const [activeTab, setActiveTab] = useState("hourly");
   const [isTabLoading, setIsTabLoading] = useState(false);
+
+  useEffect(() => {
+    const getUserLocation = async () => {
+      if ("geolocation" in navigator) {
+        try {
+          const position = await new Promise<GeolocationPosition>((resolve, reject) => {
+            navigator.geolocation.getCurrentPosition(resolve, reject, {
+              timeout: 5000,
+              maximumAge: 0,
+            });
+          });
+          
+          const { latitude, longitude } = position.coords;
+          const cityName = await getCityFromCoords(latitude, longitude);
+          setCity(cityName);
+          toast.success("Location detected successfully!");
+        } catch (error) {
+          if (error instanceof GeolocationPositionError) {
+            switch (error.code) {
+              case error.PERMISSION_DENIED:
+                toast.error("Location permission denied. Using default location.");
+                break;
+              case error.TIMEOUT:
+                toast.error("Location request timed out. Using default location.");
+                break;
+              default:
+                toast.error("Unable to get location. Using default location.");
+            }
+          } else {
+            toast.error("Error detecting location. Using default location.");
+          }
+        }
+      } else {
+        toast.error("Geolocation is not supported by your browser. Using default location.");
+      }
+    };
+
+    getUserLocation();
+  }, []);
 
   const { data: weather, isLoading, isError } = useQuery({
     queryKey: ["weather", city],
