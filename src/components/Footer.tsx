@@ -1,7 +1,17 @@
 import { Github, Twitter, Mail, MapPin, Phone } from "lucide-react";
 import { motion } from "framer-motion";
+import { useNavigate, useLocation } from "react-router-dom";
 
 export const Footer = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const handleNavigation = (path: string) => {
+    if (location.pathname !== path) {
+      navigate(path, { replace: true });
+    }
+  };
+
   return (
     <motion.footer 
       initial={{ opacity: 0, y: 20 }}
@@ -38,19 +48,28 @@ export const Footer = () => {
             <h3 className="text-white font-semibold mb-4">Quick Links</h3>
             <ul className="space-y-2">
               <li>
-                <a href="/about" className="text-sm text-white/50 hover:text-white transition-colors">
+                <button
+                  onClick={() => handleNavigation("/about")}
+                  className="text-sm text-white/50 hover:text-white transition-colors"
+                >
                   About Us
-                </a>
+                </button>
               </li>
               <li>
-                <a href="/features" className="text-sm text-white/50 hover:text-white transition-colors">
+                <button
+                  onClick={() => handleNavigation("/features")}
+                  className="text-sm text-white/50 hover:text-white transition-colors"
+                >
                   Features
-                </a>
+                </button>
               </li>
               <li>
-                <a href="/contact" className="text-sm text-white/50 hover:text-white transition-colors">
+                <button
+                  onClick={() => handleNavigation("/contact")}
+                  className="text-sm text-white/50 hover:text-white transition-colors"
+                >
                   Contact
-                </a>
+                </button>
               </li>
             </ul>
           </div>
@@ -82,8 +101,18 @@ export const Footer = () => {
               © 2024 ForeCastify. All rights reserved.
             </p>
             <div className="flex items-center gap-4 text-sm text-white/50">
-              <a href="/privacy" className="hover:text-white transition-colors">Privacy Policy</a>
-              <a href="/terms" className="hover:text-white transition-colors">Terms of Service</a>
+              <button
+                onClick={() => handleNavigation("/privacy")}
+                className="hover:text-white transition-colors"
+              >
+                Privacy Policy
+              </button>
+              <button
+                onClick={() => handleNavigation("/terms")}
+                className="hover:text-white transition-colors"
+              >
+                Terms of Service
+              </button>
             </div>
           </div>
         </div>
