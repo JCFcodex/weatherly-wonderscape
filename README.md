@@ -12,7 +12,7 @@
 
 ForeCastify is a modern weather application built with a focus on user experience, featuring real-time weather updates, detailed forecasts, and a clean, responsive design powered by React and TypeScript.
 
-[Live Demo](https://run.gptengineer.app/projects/84fb3b43-c258-4034-949e-c2c9a45d527f/improve) | [Report Bug](https://github.com/JCFcodex/forecastify/issues) | [Request Feature](https://github.com/JCFcodex/forecastify/issues)
+[Live Demo](https://forecastifytoday.onrender.com) | [Report Bug](https://github.com/JCFcodex/forecastify/issues) | [Request Feature](https://github.com/JCFcodex/forecastify/issues)
 
 </div>
 
