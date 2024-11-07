@@ -1,19 +1,9 @@
 import { motion } from "framer-motion";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
-import { LoadingCard } from "@/components/LoadingCard";
 import { Cloud, Sun, Wind, Droplets, ThermometerSun, Lock, Crown, Bell, Smartphone, Map, Zap, MessageSquare } from "lucide-react";
-import { useState, useEffect } from "react";
 
 const Features = () => {
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 800);
-  }, []);
-
   const features = [
     {
       icon: <ThermometerSun className="w-6 h-6 sm:w-8 sm:h-8 text-weather-sunny" />,
@@ -80,11 +70,6 @@ const Features = () => {
     <div className="min-h-screen bg-[#1C1C1E] font-['Outfit'] overflow-hidden flex flex-col">
       <Header />
       <main className="flex-1 px-4 sm:px-6 lg:px-8 py-6 mt-16 sm:mt-20">
-        {isLoading ? (
-          <div className="max-w-[1200px] mx-auto">
-            <LoadingCard />
-          </div>
-        ) : (
         <div className="max-w-[1200px] mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -163,7 +148,6 @@ const Features = () => {
             </motion.div>
           </motion.div>
         </div>
-        )}
       </main>
       <Footer />
     </div>
