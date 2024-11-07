@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { SearchBar } from "@/components/SearchBar";
 import { WeatherCard } from "@/components/WeatherCard";
@@ -13,43 +13,15 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { ThemeProvider } from "next-themes";
 import { Helmet } from "react-helmet";
-import { useToast } from "@/components/ui/use-toast";
-import { getCurrentLocation, getCityFromCoords } from "@/utils/geolocation";
 
 const Index = () => {
-  const [city, setCity] = useState<string>("");
+  const [city, setCity] = useState("Manila");
   const [activeTab, setActiveTab] = useState("hourly");
   const [isTabLoading, setIsTabLoading] = useState(false);
-  const { toast } = useToast();
-
-  useEffect(() => {
-    const initializeLocation = async () => {
-      try {
-        const coords = await getCurrentLocation();
-        const cityName = await getCityFromCoords(coords.latitude, coords.longitude);
-        setCity(cityName);
-        toast({
-          title: "Location detected",
-          description: `Weather information for ${cityName} will be displayed.`,
-        });
-      } catch (error) {
-        console.error('Error getting location:', error);
-        setCity("Manila");
-        toast({
-          title: "Location access denied",
-          description: "Using Manila as default location. You can search for other cities using the search bar.",
-          variant: "destructive",
-        });
-      }
-    };
-
-    initializeLocation();
-  }, []);
 
   const { data: weather, isLoading, isError } = useQuery({
     queryKey: ["weather", city],
     queryFn: () => fetchWeatherData(city),
-    enabled: !!city,
     retry: false,
     retryOnMount: false
   });
