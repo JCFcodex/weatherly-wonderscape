@@ -49,17 +49,22 @@ cd forecastify
 npm install
 ```
 
-3. Start the development server
+3. Build the frontend
 ```bash
-npm run dev
+npm run build
 ```
 
-4. Start the backend server
+4. Start the backend server (this will also serve the built frontend)
 ```bash
 cd backend
 pip install -r requirements.txt
 python app.py
 ```
+
+5. Access the application
+Open your browser and navigate to `http://localhost:5000`
+
+Note: After building the frontend, you only need to run the backend server. The Flask backend will serve both the API and the built frontend files.
 
 ## 🤝 Contributing
 
