@@ -37,88 +37,27 @@ const Terms = () => {
             <div className="grid gap-8">
               <Card className="bg-white/5 border-white/10 backdrop-blur-sm">
                 <CardContent className="p-6">
-                  <h2 className="text-2xl font-semibold text-white mb-4">1. Service Agreement</h2>
-                  <div className="space-y-4 text-white/80 leading-relaxed">
-                    <p>By using ForeCastify, you agree to:</p>
-                    <ul className="list-disc pl-6 space-y-2">
-                      <li>Comply with all applicable laws and regulations</li>
-                      <li>Provide accurate information when required</li>
-                      <li>Use the service for personal, non-commercial purposes only</li>
-                      <li>Not attempt to circumvent any security measures</li>
-                      <li>Accept updates and modifications to the service</li>
-                    </ul>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className="bg-white/5 border-white/10 backdrop-blur-sm">
-                <CardContent className="p-6">
-                  <h2 className="text-2xl font-semibold text-white mb-4">2. User Responsibilities</h2>
-                  <div className="space-y-4 text-white/80 leading-relaxed">
-                    <p>As a user, you are responsible for:</p>
-                    <ul className="list-disc pl-6 space-y-2">
-                      <li>Maintaining the confidentiality of your account</li>
-                      <li>All activities that occur under your account</li>
-                      <li>Ensuring your device meets minimum system requirements</li>
-                      <li>Reporting any security vulnerabilities or misuse</li>
-                      <li>Understanding that weather forecasts are predictions and may not be 100% accurate</li>
-                    </ul>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className="bg-white/5 border-white/10 backdrop-blur-sm">
-                <CardContent className="p-6">
-                  <h2 className="text-2xl font-semibold text-white mb-4">3. Intellectual Property</h2>
-                  <div className="space-y-4 text-white/80 leading-relaxed">
-                    <p>All content and features in ForeCastify are protected by:</p>
-                    <ul className="list-disc pl-6 space-y-2">
-                      <li>Copyright laws and international treaties</li>
-                      <li>Trademark rights and service marks</li>
-                      <li>Patents and pending patent applications</li>
-                      <li>Trade secrets and proprietary rights</li>
-                    </ul>
-                    <p>You may not copy, modify, distribute, or create derivative works without our explicit permission.</p>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className="bg-white/5 border-white/10 backdrop-blur-sm">
-                <CardContent className="p-6">
-                  <h2 className="text-2xl font-semibold text-white mb-4">4. Limitation of Liability</h2>
-                  <div className="space-y-4 text-white/80 leading-relaxed">
-                    <p>ForeCastify and its team:</p>
-                    <ul className="list-disc pl-6 space-y-2">
-                      <li>Provide weather data "as is" without any warranties</li>
-                      <li>Are not liable for decisions made based on our forecasts</li>
-                      <li>Do not guarantee uninterrupted or error-free service</li>
-                      <li>May experience occasional downtime for maintenance</li>
-                      <li>Reserve the right to modify or discontinue services</li>
-                    </ul>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className="bg-white/5 border-white/10 backdrop-blur-sm">
-                <CardContent className="p-6">
-                  <h2 className="text-2xl font-semibold text-white mb-4">5. Termination</h2>
-                  <div className="space-y-4 text-white/80 leading-relaxed">
-                    <p>We reserve the right to:</p>
-                    <ul className="list-disc pl-6 space-y-2">
-                      <li>Terminate or suspend accounts for violations</li>
-                      <li>Remove content that violates these terms</li>
-                      <li>Modify or discontinue services without notice</li>
-                      <li>Take legal action if necessary</li>
-                    </ul>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className="bg-white/5 border-white/10 backdrop-blur-sm">
-                <CardContent className="p-6">
-                  <h2 className="text-2xl font-semibold text-white mb-4">6. Changes to Terms</h2>
+                  <h2 className="text-2xl font-semibold text-white mb-4">1. Acceptance of Terms</h2>
                   <p className="text-white/80 leading-relaxed">
-                    We may update these terms at any time. Continued use of ForeCastify after changes constitutes acceptance of the new terms. For questions about these terms, contact us at legal@forecastify.com.
+                    By accessing and using ForeCastify, you agree to be bound by these Terms of Service and all applicable laws and regulations.
+                  </p>
+                </CardContent>
+              </Card>
+
+              <Card className="bg-white/5 border-white/10 backdrop-blur-sm">
+                <CardContent className="p-6">
+                  <h2 className="text-2xl font-semibold text-white mb-4">2. Use License</h2>
+                  <p className="text-white/80 leading-relaxed">
+                    We grant you a limited, non-exclusive, non-transferable license to access and use our services for personal, non-commercial purposes.
+                  </p>
+                </CardContent>
+              </Card>
+
+              <Card className="bg-white/5 border-white/10 backdrop-blur-sm">
+                <CardContent className="p-6">
+                  <h2 className="text-2xl font-semibold text-white mb-4">3. Disclaimer</h2>
+                  <p className="text-white/80 leading-relaxed">
+                    While we strive to provide accurate weather information, we cannot guarantee the accuracy of all forecasts. Use our services at your own discretion.
                   </p>
                 </CardContent>
               </Card>
