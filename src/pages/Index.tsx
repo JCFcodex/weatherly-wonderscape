@@ -31,6 +31,9 @@ const Index = () => {
   };
 
   const handleTabChange = (value: string) => {
+    // Prevent default behavior and history stacking
+    if (value === activeTab) return;
+    
     setIsTabLoading(true);
     setActiveTab(value);
     setTimeout(() => {
