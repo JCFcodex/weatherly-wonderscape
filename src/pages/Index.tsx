@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { SearchBar } from "@/components/SearchBar";
 import { WeatherCard } from "@/components/WeatherCard";
@@ -13,17 +13,61 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { ThemeProvider } from "next-themes";
 import { Helmet } from "react-helmet";
+import { toast } from "sonner";
 
 const Index = () => {
-  const [city, setCity] = useState("Manila");
+  const [city, setCity] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState("hourly");
   const [isTabLoading, setIsTabLoading] = useState(false);
 
+  useEffect(() => {
+    const getLocation = () => {
+      if ("geolocation" in navigator) {
+        navigator.geolocation.getCurrentPosition(
+          async (position) => {
+            try {
+              const response = await fetch(
+                `http://localhost:5000/api/location?lat=${position.coords.latitude}&lon=${position.coords.longitude}`
+              );
+              const data = await response.json();
+              if (data.city) {
+                setCity(data.city);
+                toast.success("Location detected successfully");
+              } else {
+                toast.error("Could not determine your location");
+              }
+            } catch (error) {
+              toast.error("Error detecting location");
+            }
+          },
+          (error) => {
+            switch (error.code) {
+              case error.PERMISSION_DENIED:
+                toast.error("Please allow location access or search for a city");
+                break;
+              case error.POSITION_UNAVAILABLE:
+                toast.error("Location information unavailable");
+                break;
+              case error.TIMEOUT:
+                toast.error("Location request timed out");
+                break;
+              default:
+                toast.error("Error detecting location");
+            }
+          }
+        );
+      } else {
+        toast.error("Geolocation is not supported by your browser");
+      }
+    };
+
+    getLocation();
+  }, []);
+
   const { data: weather, isLoading, isError } = useQuery({
     queryKey: ["weather", city],
-    queryFn: () => fetchWeatherData(city),
-    retry: false,
-    retryOnMount: false
+    queryFn: () => (city ? fetchWeatherData(city) : null),
+    enabled: !!city,
   });
 
   const handleSearch = (newCity: string) => {
@@ -42,10 +86,19 @@ const Index = () => {
     <ThemeProvider defaultTheme="dark" attribute="class">
       <div className="min-h-screen flex flex-col bg-[#1C1C1E] dark:bg-[#1C1C1E] font-['Outfit']">
         <Helmet>
-          <title>ForeCastify - Weather Forecast for {city}</title>
-          <meta name="description" content={`Get real-time weather updates and forecast for ${city}. View temperature, humidity, wind speed, and more.`} />
-          <meta name="keywords" content={`${city} weather, weather forecast, temperature, humidity, wind speed, weather updates`} />
-          <link rel="canonical" href={`https://forecastify.com/weather/${city.toLowerCase()}`} />
+          <title>ForeCastify - {city ? `Weather Forecast for ${city}` : 'Weather Forecast'}</title>
+          <meta 
+            name="description" 
+            content={city ? `Get real-time weather updates and forecast for ${city}` : 'Get real-time weather updates and forecast for your location'} 
+          />
+          <meta 
+            name="keywords" 
+            content={`${city ? city + ' weather,' : ''} weather forecast, temperature, humidity, wind speed, weather updates`} 
+          />
+          <link 
+            rel="canonical" 
+            href={`https://forecastify.com${city ? `/weather/${city.toLowerCase()}` : ''}`} 
+          />
         </Helmet>
         <Header />
         <main className="flex-1 px-4 sm:px-6 lg:px-8 py-4 sm:py-6 mt-20 sm:mt-24">
@@ -57,9 +110,20 @@ const Index = () => {
               className="space-y-4 flex-1"
             >
               <section aria-label="Weather Search">
-                <h1 className="sr-only">Weather Forecast for {city}</h1>
+                <h1 className="sr-only">Weather Forecast {city ? `for ${city}` : ''}</h1>
                 <SearchBar onSearch={handleSearch} />
               </section>
+
+              {!city && !isLoading && (
+                <motion.div 
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  className="flex flex-col items-center justify-center p-8 text-white/70 text-center"
+                >
+                  <AlertCircle className="w-12 h-12 mb-4" />
+                  <p className="text-lg">Please allow location access or search for a city</p>
+                </motion.div>
+              )}
 
               {isLoading ? (
                 <LoadingCard />
@@ -104,19 +168,7 @@ const Index = () => {
                     </Tabs>
                   </section>
                 </div>
-              ) : (
-                <section aria-label="Error Message" className="flex-1">
-                  <motion.div 
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    className="flex flex-col items-center justify-center p-4 sm:p-8 bg-white/5 rounded-lg text-white/70"
-                  >
-                    <AlertCircle className="w-8 h-8 sm:w-12 sm:h-12 mb-4 text-red-400" />
-                    <p className="text-base sm:text-lg font-medium text-center">No weather data available</p>
-                    <p className="text-xs sm:text-sm mt-2 text-center">Please try searching for a valid location</p>
-                  </motion.div>
-                </section>
-              )}
+              ) : null}
             </motion.div>
           </div>
         </main>
