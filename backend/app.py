@@ -17,23 +17,27 @@ def get_location():
         if not lat or not lon:
             return jsonify({'error': 'Latitude and longitude are required'}), 400
 
-        # Using OpenStreetMap's Nominatim API for reverse geocoding
-        url = f"https://nominatim.openstreetmap.org/reverse?lat={lat}&lon={lon}&format=json"
-        headers = {'User-Agent': 'ForeCastify Weather App'}
+        # Using OpenCage API for reverse geocoding
+        api_key = 'a7905442496b425383fc77392dbb0be1'
+        url = f"https://api.opencagedata.com/geocode/v1/json?q={lat}+{lon}&key={api_key}&language=en"
         
-        response = requests.get(url, headers=headers)
+        response = requests.get(url)
         
         if response.status_code == 200:
             data = response.json()
-            city = data.get('address', {}).get('city') or \
-                   data.get('address', {}).get('town') or \
-                   data.get('address', {}).get('village') or \
-                   data.get('address', {}).get('suburb')
-                   
-            if city:
-                return jsonify({'city': city})
+            if data['results']:
+                components = data['results'][0]['components']
+                city = components.get('city') or \
+                       components.get('town') or \
+                       components.get('village') or \
+                       components.get('suburb')
+                       
+                if city:
+                    return jsonify({'city': city})
+                else:
+                    return jsonify({'error': 'Could not determine city from coordinates'}), 404
             else:
-                return jsonify({'error': 'Could not determine city from coordinates'}), 404
+                return jsonify({'error': 'No results found for these coordinates'}), 404
         else:
             return jsonify({'error': 'Failed to get location data'}), 503
 
