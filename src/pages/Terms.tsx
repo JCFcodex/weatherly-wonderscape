@@ -31,7 +31,7 @@ const Terms = () => {
           >
             <div className="text-center mb-12">
               <h1 className="text-4xl font-bold text-white mb-4">Terms of Service</h1>
-              <p className="text-white/70">Last updated: March 2024</p>
+              <p className="text-white/70">Last updated: November 2024</p>
             </div>
 
             <div className="grid gap-8">
