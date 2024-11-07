@@ -38,7 +38,7 @@ const Contact = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="space-y-12"
+            className="space-y-8"
           >
             <div className="text-center space-y-3">
               <motion.h1 
@@ -59,73 +59,66 @@ const Contact = () => {
               </motion.p>
             </div>
 
-            <div className="grid lg:grid-cols-2 gap-8">
+            <div className="grid sm:grid-cols-3 gap-4">
+              {contactInfo.map((info, index) => (
+                <motion.div
+                  key={info.title}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.5 + index * 0.1 }}
+                  className="bg-white/5 p-4 rounded-lg text-center hover:bg-white/10 transition-colors"
+                >
+                  <div className="bg-white/10 p-2 rounded-lg w-fit mx-auto mb-3">
+                    {info.icon}
+                  </div>
+                  <h3 className="text-white font-medium mb-1">{info.title}</h3>
+                  <p className="text-white/60 text-sm">{info.value}</p>
+                </motion.div>
+              ))}
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-6">
               <motion.div
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.4 }}
-                className="space-y-6"
+                className="bg-white/5 p-4 sm:p-5 rounded-xl backdrop-blur-sm h-fit"
               >
-                <div className="grid sm:grid-cols-3 gap-4">
-                  {contactInfo.map((info, index) => (
-                    <motion.div
-                      key={info.title}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.5 + index * 0.1 }}
-                      className="bg-white/5 p-4 rounded-lg text-center hover:bg-white/10 transition-colors"
-                    >
-                      <div className="bg-white/10 p-2 rounded-lg w-fit mx-auto mb-3">
-                        {info.icon}
-                      </div>
-                      <h3 className="text-white font-medium mb-1">{info.title}</h3>
-                      <p className="text-white/60 text-sm">{info.value}</p>
-                    </motion.div>
-                  ))}
+                <div className="flex items-center gap-3 mb-4">
+                  <MessageSquare className="w-5 h-5 text-primary" />
+                  <h2 className="text-xl font-semibold text-white">Live Chat</h2>
                 </div>
-
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.8 }}
-                  className="bg-white/5 p-6 rounded-xl backdrop-blur-sm"
-                >
-                  <div className="flex items-center gap-3 mb-4">
-                    <MessageSquare className="w-5 h-5 text-primary" />
-                    <h2 className="text-xl font-semibold text-white">Live Chat</h2>
-                  </div>
-                  <p className="text-white/70 mb-4">
-                    Live chat support is coming soon! Stay tuned for real-time assistance.
-                  </p>
-                  <Button className="w-full opacity-50 cursor-not-allowed" disabled>
-                    Coming Soon
-                    <Send className="w-4 h-4 ml-2" />
-                  </Button>
-                </motion.div>
+                <p className="text-white/70 mb-4 text-sm">
+                  Live chat support is coming soon! Stay tuned for real-time assistance.
+                </p>
+                <Button className="w-full opacity-50 cursor-not-allowed" disabled>
+                  Coming Soon
+                  <Send className="w-4 h-4 ml-2" />
+                </Button>
               </motion.div>
 
               <motion.div
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.6 }}
-                className="bg-white/5 p-6 rounded-xl backdrop-blur-sm"
+                className="bg-white/5 p-4 sm:p-5 rounded-xl backdrop-blur-sm"
               >
-                <h2 className="text-xl font-semibold text-white mb-6">Send us a Message</h2>
+                <h2 className="text-xl font-semibold text-white mb-4">Send us a Message</h2>
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <input
                     type="text"
                     placeholder="Your Name"
-                    className="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder:text-white/50 focus:outline-none focus:border-primary"
+                    className="w-full px-4 py-2.5 rounded-lg bg-white/10 border border-white/20 text-white placeholder:text-white/50 focus:outline-none focus:border-primary text-sm"
                   />
                   <input
                     type="email"
                     placeholder="Your Email"
-                    className="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder:text-white/50 focus:outline-none focus:border-primary"
+                    className="w-full px-4 py-2.5 rounded-lg bg-white/10 border border-white/20 text-white placeholder:text-white/50 focus:outline-none focus:border-primary text-sm"
                   />
                   <textarea
                     placeholder="Your Message"
                     rows={4}
-                    className="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder:text-white/50 focus:outline-none focus:border-primary resize-none"
+                    className="w-full px-4 py-2.5 rounded-lg bg-white/10 border border-white/20 text-white placeholder:text-white/50 focus:outline-none focus:border-primary resize-none text-sm"
                   />
                   <Button type="submit" className="w-full">
                     Send Message
