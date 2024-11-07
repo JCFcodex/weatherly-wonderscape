@@ -23,7 +23,7 @@ const Index = () => {
     queryKey: ["weather", city],
     queryFn: () => fetchWeatherData(city),
     staleTime: 300000, // 5 minutes
-    cacheTime: 3600000, // 1 hour
+    gcTime: 3600000, // 1 hour (formerly cacheTime)
     retry: 1
   });
 
