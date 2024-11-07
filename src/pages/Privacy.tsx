@@ -38,27 +38,64 @@ const Privacy = () => {
               <Card className="bg-white/5 border-white/10 backdrop-blur-sm">
                 <CardContent className="p-6">
                   <h2 className="text-2xl font-semibold text-white mb-4">1. Information We Collect</h2>
-                  <p className="text-white/80 leading-relaxed">
-                    We collect information that you provide directly to us, including location data, search history, and device information to provide accurate weather forecasts and improve our services.
-                  </p>
+                  <div className="space-y-4 text-white/80 leading-relaxed">
+                    <p>At ForeCastify, we collect and process the following types of information:</p>
+                    <ul className="list-disc pl-6 space-y-2">
+                      <li>Location data (GPS coordinates, city names, and postal codes)</li>
+                      <li>Device information (browser type, operating system, and device identifiers)</li>
+                      <li>Usage data (search history, favorite locations, and weather preferences)</li>
+                      <li>IP addresses for location approximation</li>
+                      <li>Time zone settings for accurate forecast delivery</li>
+                    </ul>
+                  </div>
                 </CardContent>
               </Card>
 
               <Card className="bg-white/5 border-white/10 backdrop-blur-sm">
                 <CardContent className="p-6">
                   <h2 className="text-2xl font-semibold text-white mb-4">2. How We Use Your Information</h2>
-                  <p className="text-white/80 leading-relaxed">
-                    We use the collected information to provide weather forecasts, improve our services, and send you important updates about severe weather conditions in your area.
-                  </p>
+                  <div className="space-y-4 text-white/80 leading-relaxed">
+                    <p>Your information helps us provide and improve our weather forecasting services:</p>
+                    <ul className="list-disc pl-6 space-y-2">
+                      <li>Delivering accurate, location-based weather forecasts</li>
+                      <li>Sending severe weather alerts and notifications</li>
+                      <li>Improving our forecasting algorithms and accuracy</li>
+                      <li>Personalizing your weather dashboard experience</li>
+                      <li>Analyzing usage patterns to enhance our services</li>
+                    </ul>
+                  </div>
                 </CardContent>
               </Card>
 
               <Card className="bg-white/5 border-white/10 backdrop-blur-sm">
                 <CardContent className="p-6">
                   <h2 className="text-2xl font-semibold text-white mb-4">3. Data Security</h2>
-                  <p className="text-white/80 leading-relaxed">
-                    We implement appropriate security measures to protect your personal information from unauthorized access, alteration, or disclosure.
-                  </p>
+                  <div className="space-y-4 text-white/80 leading-relaxed">
+                    <p>We implement robust security measures to protect your data:</p>
+                    <ul className="list-disc pl-6 space-y-2">
+                      <li>End-to-end encryption for data transmission</li>
+                      <li>Regular security audits and updates</li>
+                      <li>Secure data storage with industry-standard protocols</li>
+                      <li>Limited employee access to personal information</li>
+                      <li>Automated threat detection and prevention systems</li>
+                    </ul>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card className="bg-white/5 border-white/10 backdrop-blur-sm">
+                <CardContent className="p-6">
+                  <h2 className="text-2xl font-semibold text-white mb-4">4. Your Rights</h2>
+                  <div className="space-y-4 text-white/80 leading-relaxed">
+                    <p>You have the following rights regarding your personal data:</p>
+                    <ul className="list-disc pl-6 space-y-2">
+                      <li>Access your personal data</li>
+                      <li>Request data correction or deletion</li>
+                      <li>Opt-out of non-essential data collection</li>
+                      <li>Export your data in a portable format</li>
+                      <li>Withdraw consent for data processing</li>
+                    </ul>
+                  </div>
                 </CardContent>
               </Card>
             </div>
