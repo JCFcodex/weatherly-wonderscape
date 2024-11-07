@@ -33,9 +33,28 @@ export interface WeatherData {
 }
 
 export const fetchWeatherData = async (query: string): Promise<WeatherData> => {
-  const response = await fetch(`http://localhost:5000/api/weather/${encodeURIComponent(query)}`);
-  if (!response.ok) {
-    throw new Error('Failed to fetch weather data');
+  try {
+    const response = await fetch(`http://localhost:5000/api/weather/${encodeURIComponent(query)}`);
+    if (!response.ok) {
+      if (response.status === 404) {
+        throw new Error('Location not found. Please try searching with a different name.');
+      }
+      throw new Error('Failed to fetch weather data');
+    }
+    const data = await response.json();
+    
+    // Verify if the location data makes sense
+    if (!data.location || !data.location.name) {
+      throw new Error('Invalid location data received');
+    }
+    
+    return data;
+  } catch (error) {
+    if (error instanceof Error) {
+      toast.error(error.message);
+    } else {
+      toast.error('An unexpected error occurred');
+    }
+    throw error;
   }
-  return response.json();
 };
