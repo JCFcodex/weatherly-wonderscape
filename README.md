@@ -82,7 +82,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🙏 Acknowledgments
 
-- Weather data provided by OpenWeatherMap API
+- Weather data provided by [WeatherAPI](https://www.weatherapi.com/)
 - UI components from shadcn/ui
 - Icons from Lucide React
 
