@@ -8,7 +8,11 @@ from services.weather_service import get_cached_weather, cache_weather, fetch_we
 current_dir = os.path.dirname(os.path.abspath(__file__))
 dist_dir = os.path.join(os.path.dirname(current_dir), 'dist')
 
-app = Flask(__name__, static_folder=dist_dir, static_url_path='')
+# Ensure the dist directory exists
+if not os.path.exists(dist_dir):
+    raise Exception(f"Directory {dist_dir} does not exist. Please run 'npm run build' first.")
+
+app = Flask(__name__, static_folder=dist_dir)
 CORS(app)
 
 @app.route('/api/weather/<query>')
@@ -43,20 +47,25 @@ def get_weather(query):
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-# Serve static files and handle client-side routing
+# Serve React App - All routes except /api/* will serve index.html
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
 def serve(path):
     if path.startswith('api/'):
         return jsonify({'error': 'Not found'}), 404
+        
+    # First try to serve the exact file
+    if path and os.path.exists(os.path.join(dist_dir, path)):
+        return send_from_directory(dist_dir, path)
+        
+    # For all other routes, serve index.html to support client-side routing
     try:
-        if os.path.exists(os.path.join(dist_dir, path)):
-            return send_from_directory(dist_dir, path)
         return send_from_directory(dist_dir, 'index.html')
     except Exception as e:
-        return str(e), 500
+        print(f"Error serving file: {str(e)}")
+        return f"Error: {str(e)}", 500
 
 if __name__ == '__main__':
     init_db()
     port = int(os.getenv("PORT", 5000))
-    app.run(host="0.0.0.0", port=port, debug=False)
+    app.run(host="0.0.0.0", port=port)
