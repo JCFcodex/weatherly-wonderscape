@@ -95,10 +95,10 @@ const Contact = () => {
                     <h2 className="text-xl font-semibold text-white">Live Chat</h2>
                   </div>
                   <p className="text-white/70 mb-4">
-                    Our support team is available 24/7 to assist you with any questions or concerns.
+                    Live chat support is coming soon! Stay tuned for real-time assistance.
                   </p>
-                  <Button className="w-full">
-                    Start Chat
+                  <Button className="w-full opacity-50 cursor-not-allowed" disabled>
+                    Coming Soon
                     <Send className="w-4 h-4 ml-2" />
                   </Button>
                 </motion.div>

@@ -13,7 +13,7 @@ const About = () => {
     {
       icon: <Users className="w-6 h-6 text-purple-400" />,
       title: "Our Team",
-      description: "A dedicated group of meteorologists and developers working to deliver the best weather forecasting experience."
+      description: "A passionate team of developers working to deliver the best weather forecasting experience."
     },
     {
       icon: <Award className="w-6 h-6 text-green-400" />,
@@ -25,23 +25,23 @@ const About = () => {
   const technologies = [
     {
       icon: <Sun className="w-6 h-6 text-weather-sunny" />,
-      title: "Advanced Algorithms",
-      description: "State-of-the-art weather prediction models"
+      title: "WeatherAPI Integration",
+      description: "Powered by WeatherAPI's reliable data"
     },
     {
       icon: <Cloud className="w-6 h-6 text-weather-cloudy" />,
-      title: "Cloud Computing",
-      description: "Powerful infrastructure for real-time updates"
+      title: "Real-time Updates",
+      description: "Up-to-the-minute weather information"
     },
     {
       icon: <Wind className="w-6 h-6 text-primary" />,
-      title: "Data Analysis",
-      description: "Comprehensive weather pattern analysis"
+      title: "Accurate Forecasts",
+      description: "Precise weather predictions"
     },
     {
       icon: <Droplets className="w-6 h-6 text-weather-rainy" />,
-      title: "Precision Metrics",
-      description: "Accurate precipitation forecasting"
+      title: "Detailed Metrics",
+      description: "Comprehensive weather data"
     }
   ];
 

@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
-import { Cloud, Sun, Wind, Droplets, ThermometerSun, Lock, Crown, Bell, Smartphone, Map, Zap } from "lucide-react";
+import { Cloud, Sun, Wind, Droplets, ThermometerSun, Lock, Crown, Bell, Smartphone, Map, Zap, MessageSquare } from "lucide-react";
 
 const Features = () => {
   const features = [
@@ -59,9 +59,9 @@ const Features = () => {
       comingSoon: true
     },
     {
-      icon: <Zap className="w-6 h-6 text-orange-400" />,
-      title: "AI Predictions",
-      description: "Get personalized weather insights powered by artificial intelligence.",
+      icon: <MessageSquare className="w-6 h-6 text-orange-400" />,
+      title: "Live Chat Support",
+      description: "Get real-time assistance from our support team.",
       comingSoon: true
     }
   ];
