@@ -80,7 +80,7 @@ const Index = () => {
                       value={activeTab}
                       onValueChange={handleTabChange}
                     >
-                      <TabsList className="w-full bg-white/5 border-0 mb-3 sm:mb-4">
+                      <TabsList className="w-full py-7 bg-white/5 border-0 mb-3 sm:mb-4">
                         <TabsTrigger 
                           value="hourly" 
                           className="flex-1 data-[state=active]:bg-white/10 data-[state=active]:text-white text-white/70"
