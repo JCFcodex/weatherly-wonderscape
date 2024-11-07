@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { SearchBar } from "@/components/SearchBar";
-import { WeatherCard } from "@/components/WeatherCard";
-import { WeatherChart } from "@/components/WeatherChart";
-import { WeatherForecast } from "@/components/WeatherForecast";
+import { WeatherCard } from "@/components/weather/WeatherCard";
+import { WeatherChart } from "@/components/weather/WeatherChart";
+import { WeatherForecast } from "@/components/weather/WeatherForecast";
 import { fetchWeatherData } from "@/services/weatherApi";
 import { LoadingCard } from "@/components/LoadingCard";
 import { motion } from "framer-motion";
@@ -19,7 +19,14 @@ const Index = () => {
   const [city, setCity] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState("hourly");
   const [isTabLoading, setIsTabLoading] = useState(false);
+  const [pageLoading, setPageLoading] = useState(true);
   const { location, loading: locationLoading } = useGeolocation();
+
+  useEffect(() => {
+    setTimeout(() => {
+      setPageLoading(false);
+    }, 800);
+  }, []);
 
   const { data: weather, isLoading, isError } = useQuery({
     queryKey: ["weather", city, location],
@@ -46,6 +53,20 @@ const Index = () => {
       setIsTabLoading(false);
     }, 500);
   };
+
+  if (pageLoading) {
+    return (
+      <div className="min-h-screen flex flex-col bg-[#1C1C1E]">
+        <Header />
+        <main className="flex-1 px-4 sm:px-6 lg:px-8 py-4 sm:py-6 mt-20 sm:mt-24">
+          <div className="max-w-[1200px] mx-auto">
+            <LoadingCard />
+          </div>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
 
   return (
     <ThemeProvider defaultTheme="dark" attribute="class">
