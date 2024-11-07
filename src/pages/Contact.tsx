@@ -20,12 +20,12 @@ const Contact = () => {
     {
       icon: <Phone className="w-5 h-5 text-green-400" />,
       title: "Phone",
-      value: "+1 (555) 123-4567"
+      value: "+63 (44) 123-4567"
     },
     {
       icon: <MapPin className="w-5 h-5 text-purple-400" />,
       title: "Location",
-      value: "San Francisco, CA"
+      value: "Hagonoy, Bulacan, Philippines"
     }
   ];
 
