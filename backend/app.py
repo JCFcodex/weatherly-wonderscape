@@ -1,8 +1,8 @@
 from flask import Flask, jsonify, request, send_from_directory, make_response
 from flask_cors import CORS
 import os
-from .database.db import init_db
-from .services.weather_service import get_cached_weather, cache_weather, fetch_weather_data
+from database.db import init_db
+from services.weather_service import get_cached_weather, cache_weather, fetch_weather_data
 
 app = Flask(__name__, static_folder='../dist', static_url_path='')
 CORS(app)

@@ -2,8 +2,8 @@ from functools import lru_cache
 import json
 from datetime import datetime, timedelta
 import requests
-from ..database.db import get_db
-from ..config.config import API_KEY, WEATHER_API_URL
+from database.db import get_db
+from config.config import API_KEY, WEATHER_API_URL
 
 @lru_cache(maxsize=100)
 def get_cached_weather(city):
