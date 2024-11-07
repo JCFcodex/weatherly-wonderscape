@@ -25,7 +25,7 @@ const Index = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setPageLoaded(true);
-    }, 800);
+    }, 1000);
     return () => clearTimeout(timer);
   }, []);
 
@@ -56,11 +56,7 @@ const Index = () => {
   };
 
   if (!pageLoaded) {
-    return (
-      <div className="min-h-screen bg-[#1C1C1E]">
-        <LoadingCard />
-      </div>
-    );
+    return <LoadingCard />;
   }
 
   return (
