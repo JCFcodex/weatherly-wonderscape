@@ -7,7 +7,6 @@ __pycache__/
 env/
 build/
 develop-eggs/
-dist/
 downloads/
 eggs/
 .eggs/
@@ -46,7 +45,7 @@ yarn-error.log*
 weather.db
 
 # Build output
-dist/
+# dist/
 build/
 coverage/
 
