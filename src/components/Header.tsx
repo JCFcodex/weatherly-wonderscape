@@ -16,12 +16,11 @@ export const Header = () => {
     { name: "Contact", path: "contact" },
   ];
 
-  const isActive = (path: string) => location.pathname === (path ? `/${path}` : '/');
+  const isActive = (path: string) => location.pathname.replace('/', '') === path;
 
   const handleNavigation = (path: string) => {
-    const currentPath = path ? `/${path}` : '/';
-    if (location.pathname !== currentPath) {
-      navigate(currentPath, { replace: true });
+    if (location.pathname.replace('/', '') !== path) {
+      navigate(path, { replace: true });
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
     setIsMenuOpen(false);
