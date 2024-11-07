@@ -1,5 +1,7 @@
 import { toast } from "sonner";
 
+const BASE_URL = "http://localhost:5000/api";
+
 export interface WeatherData {
   location: {
     name: string;
@@ -26,10 +28,6 @@ export interface WeatherData {
           icon: string;
         };
       };
-      hour: Array<{
-        time: string;
-        temp_c: number;
-      }>;
     }>;
   };
 }
@@ -41,7 +39,7 @@ export const fetchWeatherData = async (city: string): Promise<WeatherData> => {
   }
 
   try {
-    const response = await fetch(`http://localhost:5000/api/weather/${encodeURIComponent(city)}`);
+    const response = await fetch(`${BASE_URL}/weather/${encodeURIComponent(city)}`);
     const data = await response.json();
     
     if (!response.ok) {
@@ -69,7 +67,7 @@ export const fetchWeatherData = async (city: string): Promise<WeatherData> => {
 
 export const fetchRecentSearches = async (): Promise<string[]> => {
   try {
-    const response = await fetch(`http://localhost:5000/api/recent-searches`);
+    const response = await fetch(`${BASE_URL}/recent-searches`);
     if (!response.ok) {
       throw new Error('Failed to fetch recent searches');
     }
