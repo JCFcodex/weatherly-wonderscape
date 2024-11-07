@@ -3,42 +3,9 @@ from flask_cors import CORS
 import os
 from database.db import init_db
 from services.weather_service import get_cached_weather, cache_weather, fetch_weather_data
-import requests
 
 app = Flask(__name__, static_folder='../dist', static_url_path='')
 CORS(app)
-
-@app.route('/api/location')
-def get_location():
-    try:
-        lat = request.args.get('lat')
-        lon = request.args.get('lon')
-        
-        if not lat or not lon:
-            return jsonify({'error': 'Latitude and longitude are required'}), 400
-
-        # Using OpenStreetMap's Nominatim API for reverse geocoding
-        url = f"https://nominatim.openstreetmap.org/reverse?lat={lat}&lon={lon}&format=json"
-        headers = {'User-Agent': 'ForeCastify Weather App'}
-        
-        response = requests.get(url, headers=headers)
-        
-        if response.status_code == 200:
-            data = response.json()
-            city = data.get('address', {}).get('city') or \
-                   data.get('address', {}).get('town') or \
-                   data.get('address', {}).get('village') or \
-                   data.get('address', {}).get('suburb')
-                   
-            if city:
-                return jsonify({'city': city})
-            else:
-                return jsonify({'error': 'Could not determine city from coordinates'}), 404
-        else:
-            return jsonify({'error': 'Failed to get location data'}), 503
-
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
 
 @app.route('/api/weather/<city>')
 def get_weather(city):
