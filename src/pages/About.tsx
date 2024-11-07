@@ -1,7 +1,6 @@
 import { motion } from "framer-motion";
-import { Header } from "@/components/Header";
-import { Footer } from "@/components/Footer";
-
+import { Header } from "@/components/weather/Header";
+import { Footer } from "@/components/weather/Footer";
 const About = () => {
   return (
     <div className="min-h-screen bg-[#1C1C1E] font-['Outfit'] overflow-hidden flex flex-col">

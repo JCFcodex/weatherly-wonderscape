@@ -1,16 +1,16 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { SearchBar } from "@/components/SearchBar";
-import { WeatherCard } from "@/components/WeatherCard";
-import { WeatherChart } from "@/components/WeatherChart";
-import { WeatherForecast } from "@/components/WeatherForecast";
-import { fetchWeatherData } from "@/services/weatherApi";
+import { SearchBar } from "@/components/weather/SearchBar";
+import { WeatherCard } from "@/components/weather/WeatherCard";
+import { WeatherChart } from "@/components/weather/WeatherChart";
+import { WeatherForecast } from "@/components/weather/WeatherForecast";
+import { fetchWeatherData } from "@/lib/api/weatherApi";
 import { LoadingCard } from "@/components/LoadingCard";
 import { motion } from "framer-motion";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { AlertCircle } from "lucide-react";
-import { Header } from "@/components/Header";
-import { Footer } from "@/components/Footer";
+import { Header } from "@/components/weather/Header";
+import { Footer } from "@/components/weather/Footer";
 import { ThemeProvider } from "next-themes";
 import { Helmet } from "react-helmet";
 
