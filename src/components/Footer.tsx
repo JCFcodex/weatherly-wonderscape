@@ -30,9 +30,9 @@ export const Footer = () => {
       className="w-full py-6 mt-auto bg-gradient-to-b from-[#1C1C1E]/95 to-[#2C2C2E] border-t border-white/10 backdrop-blur-sm"
     >
       <div className="container mx-auto px-4">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
           {/* Brand Section */}
-          <div className="space-y-2">
+          <div className="space-y-3">
             <h3 className="text-base font-semibold text-white text-left">ForeCastify</h3>
             <p className="text-xs text-white/60 leading-relaxed text-left">
               Your trusted weather companion.
@@ -40,9 +40,9 @@ export const Footer = () => {
           </div>
 
           {/* Quick Links */}
-          <div className="space-y-2">
+          <div className="space-y-3">
             <h3 className="text-base font-semibold text-white text-left">Quick Links</h3>
-            <div className="flex flex-col space-y-1">
+            <div className="flex flex-col space-y-2">
               {["About", "Features", "Contact"].map((item) => (
                 <button
                   key={item}
@@ -56,9 +56,9 @@ export const Footer = () => {
           </div>
 
           {/* Legal Links */}
-          <div className="space-y-2">
+          <div className="space-y-3">
             <h3 className="text-base font-semibold text-white text-left">Legal</h3>
-            <div className="flex flex-col space-y-1">
+            <div className="flex flex-col space-y-2">
               {["Terms", "Privacy"].map((item) => (
                 <button
                   key={item}
@@ -72,7 +72,7 @@ export const Footer = () => {
           </div>
 
           {/* Social Links */}
-          <div className="space-y-2">
+          <div className="space-y-3">
             <h3 className="text-base font-semibold text-white text-left">Connect</h3>
             <div className="flex flex-wrap gap-2">
               {socialLinks.map(({ icon: Icon, href }) => (
