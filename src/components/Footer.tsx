@@ -1,4 +1,4 @@
-import { Github, Twitter, Mail, MapPin, Phone } from "lucide-react";
+import { Github, Twitter, Mail, MapPin, Phone, Facebook, Instagram, Linkedin, Youtube } from "lucide-react";
 import { motion } from "framer-motion";
 import { useNavigate, useLocation } from "react-router-dom";
 
@@ -76,7 +76,7 @@ export const Footer = () => {
           </div>
           <div>
             <h3 className="text-white font-semibold mb-4">Follow Us</h3>
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-4 flex-wrap">
               <a 
                 href="https://github.com" 
                 target="_blank" 
@@ -92,6 +92,38 @@ export const Footer = () => {
                 className="text-white/50 hover:text-white transition-colors"
               >
                 <Twitter className="w-5 h-5" />
+              </a>
+              <a 
+                href="https://facebook.com" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-white/50 hover:text-white transition-colors"
+              >
+                <Facebook className="w-5 h-5" />
+              </a>
+              <a 
+                href="https://instagram.com" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-white/50 hover:text-white transition-colors"
+              >
+                <Instagram className="w-5 h-5" />
+              </a>
+              <a 
+                href="https://linkedin.com" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-white/50 hover:text-white transition-colors"
+              >
+                <Linkedin className="w-5 h-5" />
+              </a>
+              <a 
+                href="https://youtube.com" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-white/50 hover:text-white transition-colors"
+              >
+                <Youtube className="w-5 h-5" />
               </a>
             </div>
           </div>
