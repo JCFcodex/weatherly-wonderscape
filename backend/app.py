@@ -39,14 +39,15 @@ def get_weather(query):
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-# Serve React app for all non-API routes
+# Serve static files and handle client-side routing
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
 def serve(path):
-    if path != "" and os.path.exists(app.static_folder + '/' + path):
+    if path.startswith('api/'):
+        return jsonify({'error': 'Not found'}), 404
+    if os.path.exists(os.path.join(app.static_folder, path)):
         return send_from_directory(app.static_folder, path)
-    else:
-        return send_from_directory(app.static_folder, 'index.html')
+    return send_from_directory(app.static_folder, 'index.html')
 
 if __name__ == '__main__':
     init_db()
