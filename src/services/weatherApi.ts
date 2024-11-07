@@ -53,9 +53,17 @@ export const fetchWeatherData = async (query: string): Promise<WeatherData> => {
     return data;
   } catch (error) {
     if (error instanceof Error) {
-      toast.error(error.message);
+      toast({
+        title: "Error",
+        description: error.message,
+        variant: "destructive",
+      });
     } else {
-      toast.error('An unexpected error occurred');
+      toast({
+        title: "Error",
+        description: "An unexpected error occurred",
+        variant: "destructive",
+      });
     }
     throw error;
   }
