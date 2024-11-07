@@ -1,5 +1,5 @@
 import { Card } from "@/components/ui/card";
-import { Line, LineChart, ResponsiveContainer, XAxis, YAxis, Tooltip, Gradient, defs } from "recharts";
+import { Line, LineChart, ResponsiveContainer, XAxis, YAxis, Tooltip } from "recharts";
 import { motion } from "framer-motion";
 
 interface WeatherChartProps {
