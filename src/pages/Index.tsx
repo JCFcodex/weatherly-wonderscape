@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { SearchBar } from "@/components/SearchBar";
 import { WeatherCard } from "@/components/WeatherCard";
 import { WeatherChart } from "@/components/WeatherChart";
 import { WeatherForecast } from "@/components/WeatherForecast";
-import { fetchWeatherData } from "@/services/weatherApi";
+import { fetchWeatherData } from "@/lib/api/weatherApi";
 import { LoadingCard } from "@/components/LoadingCard";
 import { motion } from "framer-motion";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -13,11 +13,51 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { ThemeProvider } from "next-themes";
 import { Helmet } from "react-helmet";
+import { toast } from "sonner";
 
 const Index = () => {
   const [city, setCity] = useState("Manila");
   const [activeTab, setActiveTab] = useState("hourly");
   const [isTabLoading, setIsTabLoading] = useState(false);
+
+  useEffect(() => {
+    const getUserLocation = () => {
+      if ("geolocation" in navigator) {
+        toast("Requesting location access...");
+        
+        navigator.geolocation.getCurrentPosition(
+          async (position) => {
+            try {
+              const response = await fetch(
+                `https://api.opencagedata.com/geocode/v1/json?q=${position.coords.latitude}+${position.coords.longitude}&key=YOUR_API_KEY`
+              );
+              const data = await response.json();
+              if (data.results && data.results[0]) {
+                const cityName = data.results[0].components.city || 
+                               data.results[0].components.town ||
+                               data.results[0].components.village;
+                if (cityName) {
+                  setCity(cityName);
+                  toast.success("Using your current location");
+                }
+              }
+            } catch (error) {
+              console.error("Error fetching city name:", error);
+              toast.error("Could not determine your city. Using default location.");
+            }
+          },
+          (error) => {
+            console.error("Geolocation error:", error);
+            toast.error("Location access denied. Using default location.");
+          }
+        );
+      } else {
+        toast.error("Geolocation is not supported by your browser. Using default location.");
+      }
+    };
+
+    getUserLocation();
+  }, []);
 
   const { data: weather, isLoading, isError } = useQuery({
     queryKey: ["weather", city],
