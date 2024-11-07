@@ -1,3 +1,5 @@
+import { toast } from "@/hooks/use-toast";
+
 export interface WeatherData {
   location: {
     name: string;
