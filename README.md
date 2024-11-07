@@ -1,71 +1,88 @@
-# Welcome to your GPT Engineer project
+<div align="center">
 
-## Project info
+<img src="src/assets/forecastify-logo.png" width="150" height="150" alt="ForeCastify Logo"/>
 
-**URL**: https://run.gptengineer.app/projects/84fb3b43-c258-4034-949e-c2c9a45d527f/improve
+# ForeCastify
 
-## How can I edit this code?
+[![React](https://img.shields.io/badge/React-18.3.1-61dafb?style=flat&logo=react)](https://reactjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0.0-blue?style=flat&logo=typescript)](https://www.typescriptlang.org/)
+[![Vite](https://img.shields.io/badge/Vite-5.0.0-646CFF?style=flat&logo=vite)](https://vitejs.dev/)
+[![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-3.4.0-38B2AC?style=flat&logo=tailwind-css)](https://tailwindcss.com/)
+[![License](https://img.shields.io/badge/License-MIT-orange?style=flat)](LICENSE)
 
-There are several ways of editing your application.
+ForeCastify is a modern weather application built with a focus on user experience, featuring real-time weather updates, detailed forecasts, and a clean, responsive design powered by React and TypeScript.
 
-**Use GPT Engineer**
+[Live Demo](https://run.gptengineer.app/projects/84fb3b43-c258-4034-949e-c2c9a45d527f/improve) | [Report Bug](https://github.com/yourusername/forecastify/issues) | [Request Feature](https://github.com/yourusername/forecastify/issues)
 
-Simply visit the GPT Engineer project at [GPT Engineer](https://gptengineer.app/projects/84fb3b43-c258-4034-949e-c2c9a45d527f/improve) and start prompting.
+</div>
 
-Changes made via gptengineer.app will be committed automatically to this repo.
+## ✨ Features
 
-**Use your preferred IDE**
+- 🌡️ Real-time weather updates
+- 📊 Detailed hourly and weekly forecasts
+- 🗺️ Location-based weather data
+- 📱 Responsive design for all devices
+- 🌙 Dark mode support
+- 📈 Interactive weather charts
+- 🔍 Search for any location worldwide
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in the GPT Engineer UI.
+## 🚀 Tech Stack
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+- **Frontend:** React, TypeScript, TailwindCSS
+- **State Management:** TanStack Query
+- **UI Components:** shadcn/ui
+- **Charts:** Recharts
+- **Icons:** Lucide React
+- **Build Tool:** Vite
+- **API Integration:** Flask Backend
 
-Follow these steps:
+## 🛠️ Installation
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+1. Clone the repository
+```bash
+git clone https://github.com/yourusername/forecastify.git
+```
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+2. Install dependencies
+```bash
+cd forecastify
+npm install
+```
 
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+3. Start the development server
+```bash
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+4. Start the backend server
+```bash
+cd backend
+pip install -r requirements.txt
+python app.py
+```
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## 🤝 Contributing
 
-**Use GitHub Codespaces**
+Contributions are welcome! Feel free to check out our [Contributing Guide](CONTRIBUTING.md).
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+1. Fork the project
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-## What technologies are used for this project?
+## 📝 License
 
-This project is built with .
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## 🙏 Acknowledgments
 
-## How can I deploy this project?
+- Weather data provided by OpenWeatherMap API
+- UI components from shadcn/ui
+- Icons from Lucide React
 
-All GPT Engineer projects can be deployed directly via the GPT Engineer app.
+<div align="center">
 
-Simply visit your project at [GPT Engineer](https://gptengineer.app/projects/84fb3b43-c258-4034-949e-c2c9a45d527f/improve) and click on Share -> Publish.
+Made with ❤️ by [Your Name]
 
-## I want to use a custom domain - is that possible?
-
-We don't support custom domains (yet). If you want to deploy your project under your own domain then we recommend using Netlify. Visit our docs for more details: [Custom domains](https://docs.gptengineer.app/tips-tricks/custom-domain/)
+</div>
