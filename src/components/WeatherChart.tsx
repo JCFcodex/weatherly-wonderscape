@@ -1,5 +1,5 @@
 import { Card } from "@/components/ui/card";
-import { Line, LineChart, ResponsiveContainer, XAxis, YAxis, Tooltip } from "recharts";
+import { Line, LineChart, ResponsiveContainer, XAxis, YAxis, Tooltip, Gradient, defs } from "recharts";
 import { motion } from "framer-motion";
 
 interface WeatherChartProps {
@@ -34,6 +34,12 @@ export const WeatherChart = ({ forecast }: WeatherChartProps) => {
           <div className="h-[200px] sm:h-[300px]">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={data} margin={{ top: 5, right: 10, left: -20, bottom: 5 }}>
+                <defs>
+                  <linearGradient id="tempLine" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="#FFB200" stopOpacity={1} />
+                    <stop offset="100%" stopColor="#FF8A00" stopOpacity={0.8} />
+                  </linearGradient>
+                </defs>
                 <XAxis 
                   dataKey="time" 
                   stroke="#ffffff50"
@@ -65,9 +71,14 @@ export const WeatherChart = ({ forecast }: WeatherChartProps) => {
                 <Line 
                   type="monotone" 
                   dataKey="temp" 
-                  stroke="#FFB200" 
-                  strokeWidth={2}
+                  stroke="url(#tempLine)"
+                  strokeWidth={3}
                   dot={false}
+                  animationDuration={2000}
+                  animationBegin={0}
+                  animationEasing="ease-in-out"
+                  strokeLinecap="round"
+                  filter="drop-shadow(0px 2px 4px rgba(255, 178, 0, 0.3))"
                 />
               </LineChart>
             </ResponsiveContainer>
