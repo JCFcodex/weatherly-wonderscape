@@ -53,8 +53,8 @@ export default {
         },
       },
       animation: {
-        "fade-in": "fade-in 0.3s ease-in-out",
-        "slide-up": "slide-up 0.4s ease-out",
+        "fade-in": "fade-in 0.6s ease-in-out",
+        "slide-up": "slide-up 0.8s ease-out",
       },
     },
   },
