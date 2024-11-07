@@ -63,33 +63,29 @@ const Index = () => {
               </section>
 
               {isLoading ? (
-                <section aria-label="Loading Weather Data" className="flex-1">
-                  <LoadingCard />
-                </section>
+                <LoadingCard />
               ) : weather && !isError ? (
                 <div className="grid lg:grid-cols-12 gap-3 sm:gap-4">
                   <section aria-label="Current Weather" className="lg:col-span-4">
-                    <h2 className="sr-only">Current Weather Conditions</h2>
                     <WeatherCard weather={weather} />
                   </section>
                   <section aria-label="Weather Forecast" className="lg:col-span-8">
-                    <h2 className="sr-only">Weather Forecast Details</h2>
                     <Tabs 
                       defaultValue="hourly" 
                       className="w-full"
                       value={activeTab}
                       onValueChange={handleTabChange}
                     >
-                      <TabsList className="w-full py-7 bg-white/5 border-0 mb-3 sm:mb-4">
+                      <TabsList className="mb-4 p-1.5">
                         <TabsTrigger 
                           value="hourly" 
-                          className="flex-1 data-[state=active]:bg-white/10 data-[state=active]:text-white text-white/70"
+                          className="flex-1 text-white/70 hover:text-white/90 transition-colors"
                         >
                           Hourly Forecast
                         </TabsTrigger>
                         <TabsTrigger 
                           value="weekly" 
-                          className="flex-1 data-[state=active]:bg-white/10 data-[state=active]:text-white text-white/70"
+                          className="flex-1 text-white/70 hover:text-white/90 transition-colors"
                         >
                           Weekly Forecast
                         </TabsTrigger>
