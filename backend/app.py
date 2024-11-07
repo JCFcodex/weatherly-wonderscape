@@ -39,17 +39,20 @@ def get_weather(query):
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-@app.route('/')
-def serve_frontend():
-    response = make_response(send_from_directory(app.static_folder, 'index.html'))
-    response.headers['Cache-Control'] = 'public, max-age=3600'
+# Serve static files
+@app.route('/<path:filename>')
+def serve_static(filename):
+    response = make_response(send_from_directory(app.static_folder, filename))
+    if filename.endswith(('.js', '.css', '.png', '.jpg', '.jpeg', '.gif', '.svg')):
+        response.headers['Cache-Control'] = 'public, max-age=31536000'
     return response
 
+# Catch all routes and serve index.html
+@app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
-def serve_static(path):
-    response = make_response(send_from_directory(app.static_folder, path))
-    if path.endswith(('.js', '.css', '.png', '.jpg', '.jpeg', '.gif', '.svg')):
-        response.headers['Cache-Control'] = 'public, max-age=31536000'
+def catch_all(path):
+    response = make_response(send_from_directory(app.static_folder, 'index.html'))
+    response.headers['Cache-Control'] = 'public, max-age=3600'
     return response
 
 if __name__ == '__main__':
