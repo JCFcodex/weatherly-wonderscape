@@ -39,25 +39,53 @@ const Privacy = () => {
                 <CardContent className="p-6">
                   <h2 className="text-2xl font-semibold text-white mb-4">1. Information We Collect</h2>
                   <p className="text-white/80 leading-relaxed">
-                    We collect information that you provide directly to us, including location data, search history, and device information to provide accurate weather forecasts and improve our services.
+                    ForeCastify collects only essential information needed to provide accurate weather forecasts:
+                  </p>
+                  <ul className="list-disc pl-6 mt-4 text-white/80 space-y-2">
+                    <li>Location data (when you search for a location)</li>
+                    <li>Device information (browser type and version)</li>
+                    <li>IP address (for location-based services)</li>
+                  </ul>
+                  <p className="mt-4 text-white/80">
+                    We do not require user accounts or login credentials, and we do not collect any personal identification information.
                   </p>
                 </CardContent>
               </Card>
 
               <Card className="bg-white/5 border-white/10 backdrop-blur-sm">
                 <CardContent className="p-6">
-                  <h2 className="text-2xl font-semibold text-white mb-4">2. How We Use Your Information</h2>
+                  <h2 className="text-2xl font-semibold text-white mb-4">2. How We Use Information</h2>
                   <p className="text-white/80 leading-relaxed">
-                    We use the collected information to provide weather forecasts, improve our services, and send you important updates about severe weather conditions in your area.
+                    The information we collect is used solely to:
                   </p>
+                  <ul className="list-disc pl-6 mt-4 text-white/80 space-y-2">
+                    <li>Provide accurate weather forecasts for your searched locations</li>
+                    <li>Improve our weather forecasting service</li>
+                    <li>Analyze usage patterns to enhance user experience</li>
+                    <li>Maintain and optimize our service performance</li>
+                  </ul>
                 </CardContent>
               </Card>
 
               <Card className="bg-white/5 border-white/10 backdrop-blur-sm">
                 <CardContent className="p-6">
-                  <h2 className="text-2xl font-semibold text-white mb-4">3. Data Security</h2>
+                  <h2 className="text-2xl font-semibold text-white mb-4">3. Data Protection</h2>
                   <p className="text-white/80 leading-relaxed">
-                    We implement appropriate security measures to protect your personal information from unauthorized access, alteration, or disclosure.
+                    While we don't collect personal data or require accounts, we still implement industry-standard security measures to protect any data that passes through our service:
+                  </p>
+                  <ul className="list-disc pl-6 mt-4 text-white/80 space-y-2">
+                    <li>Secure HTTPS encryption for all data transfers</li>
+                    <li>Regular security audits of our systems</li>
+                    <li>Limited data retention periods</li>
+                  </ul>
+                </CardContent>
+              </Card>
+
+              <Card className="bg-white/5 border-white/10 backdrop-blur-sm">
+                <CardContent className="p-6">
+                  <h2 className="text-2xl font-semibold text-white mb-4">4. Third-Party Services</h2>
+                  <p className="text-white/80 leading-relaxed">
+                    We use WeatherAPI.com to provide weather data. Their use of information is governed by their own privacy policy. We do not share any user information with third parties beyond what is necessary for providing our weather forecasting service.
                   </p>
                 </CardContent>
               </Card>
