@@ -43,11 +43,10 @@ def get_weather(query):
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
 def serve(path):
-    if path.startswith('api/'):
-        return jsonify({'error': 'Not found'}), 404
-    if os.path.exists(os.path.join(app.static_folder, path)):
+    if path != "" and os.path.exists(app.static_folder + '/' + path):
         return send_from_directory(app.static_folder, path)
-    return send_from_directory(app.static_folder, 'index.html')
+    else:
+        return send_from_directory(app.static_folder, 'index.html')
 
 if __name__ == '__main__':
     init_db()
