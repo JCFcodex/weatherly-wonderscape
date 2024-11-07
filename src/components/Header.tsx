@@ -21,6 +21,7 @@ export const Header = () => {
   const handleNavigation = (path: string) => {
     if (location.pathname !== path) {
       navigate(path, { replace: true });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
     setIsMenuOpen(false);
   };
