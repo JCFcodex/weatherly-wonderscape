@@ -33,7 +33,7 @@ export interface WeatherData {
 }
 
 export const fetchWeatherData = async (city: string): Promise<WeatherData> => {
-  const response = await fetch(`http://localhost:5000/api/weather/${encodeURIComponent(city)}`);
+  const response = await fetch(`/api/weather?city=${encodeURIComponent(city)}`);
   if (!response.ok) {
     throw new Error('Failed to fetch weather data');
   }
@@ -41,12 +41,13 @@ export const fetchWeatherData = async (city: string): Promise<WeatherData> => {
 };
 
 export const getCityFromCoords = async (latitude: number, longitude: number): Promise<string> => {
-  try {
-    const response = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`);
-    const data = await response.json();
-    return data.city || 'Manila';
-  } catch (error) {
-    console.error('Error getting city name:', error);
-    return 'Manila';
+  const response = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`);
+  if (!response.ok) {
+    throw new Error('Failed to get city name from coordinates');
   }
+  const data = await response.json();
+  if (!data.city) {
+    throw new Error('No city found for these coordinates');
+  }
+  return data.city;
 }
