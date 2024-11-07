@@ -1,10 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { SearchBar } from "@/components/SearchBar";
 import { WeatherCard } from "@/components/WeatherCard";
 import { WeatherChart } from "@/components/WeatherChart";
 import { WeatherForecast } from "@/components/WeatherForecast";
-import { fetchWeatherData, getCityFromCoords } from "@/services/weatherApi";
+import { fetchWeatherData } from "@/services/weatherApi";
 import { LoadingCard } from "@/components/LoadingCard";
 import { motion } from "framer-motion";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -13,56 +13,15 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { ThemeProvider } from "next-themes";
 import { Helmet } from "react-helmet";
-import { toast } from "sonner";
 
 const Index = () => {
-  const [city, setCity] = useState<string | null>(null);
+  const [city, setCity] = useState("Manila");
   const [activeTab, setActiveTab] = useState("hourly");
   const [isTabLoading, setIsTabLoading] = useState(false);
 
-  useEffect(() => {
-    const getUserLocation = async () => {
-      if ("geolocation" in navigator) {
-        try {
-          const position = await new Promise<GeolocationPosition>((resolve, reject) => {
-            navigator.geolocation.getCurrentPosition(resolve, reject, {
-              timeout: 5000,
-              maximumAge: 0,
-            });
-          });
-          
-          const { latitude, longitude } = position.coords;
-          const cityName = await getCityFromCoords(latitude, longitude);
-          setCity(cityName);
-          toast.success("Location detected successfully!");
-        } catch (error) {
-          if (error instanceof GeolocationPositionError) {
-            switch (error.code) {
-              case error.PERMISSION_DENIED:
-                toast.error("Location permission denied. Please search for a location.");
-                break;
-              case error.TIMEOUT:
-                toast.error("Location request timed out. Please search for a location.");
-                break;
-              default:
-                toast.error("Unable to get location. Please search for a location.");
-            }
-          } else {
-            toast.error("Error detecting location. Please search for a location.");
-          }
-        }
-      } else {
-        toast.error("Geolocation is not supported by your browser. Please search for a location.");
-      }
-    };
-
-    getUserLocation();
-  }, []);
-
   const { data: weather, isLoading, isError } = useQuery({
     queryKey: ["weather", city],
-    queryFn: () => fetchWeatherData(city!),
-    enabled: !!city,
+    queryFn: () => fetchWeatherData(city),
     retry: false,
     retryOnMount: false
   });
@@ -83,10 +42,10 @@ const Index = () => {
     <ThemeProvider defaultTheme="dark" attribute="class">
       <div className="min-h-screen flex flex-col bg-[#1C1C1E] dark:bg-[#1C1C1E] font-['Outfit']">
         <Helmet>
-          <title>ForeCastify - Weather Forecast {city ? `for ${city}` : ''}</title>
-          <meta name="description" content={`Get real-time weather updates and forecast${city ? ` for ${city}` : ''}. View temperature, humidity, wind speed, and more.`} />
-          <meta name="keywords" content={`${city || 'weather'} weather, weather forecast, temperature, humidity, wind speed, weather updates`} />
-          <link rel="canonical" href={`https://forecastify.com/weather/${city?.toLowerCase() || ''}`} />
+          <title>ForeCastify - Weather Forecast for {city}</title>
+          <meta name="description" content={`Get real-time weather updates and forecast for ${city}. View temperature, humidity, wind speed, and more.`} />
+          <meta name="keywords" content={`${city} weather, weather forecast, temperature, humidity, wind speed, weather updates`} />
+          <link rel="canonical" href={`https://forecastify.com/weather/${city.toLowerCase()}`} />
         </Helmet>
         <Header />
         <main className="flex-1 px-4 sm:px-6 lg:px-8 py-4 sm:py-6 mt-20 sm:mt-24">
@@ -98,23 +57,11 @@ const Index = () => {
               className="space-y-4 flex-1"
             >
               <section aria-label="Weather Search">
-                <h1 className="sr-only">Weather Forecast {city ? `for ${city}` : ''}</h1>
-                <SearchBar onSearch={setCity} />
+                <h1 className="sr-only">Weather Forecast for {city}</h1>
+                <SearchBar onSearch={handleSearch} />
               </section>
 
-              {!city ? (
-                <section aria-label="Location Prompt" className="flex-1">
-                  <motion.div 
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    className="flex flex-col items-center justify-center p-4 sm:p-8 bg-white/5 rounded-lg text-white/70"
-                  >
-                    <AlertCircle className="w-8 h-8 sm:w-12 sm:h-12 mb-4 text-blue-400" />
-                    <p className="text-base sm:text-lg font-medium text-center">Please allow location access or search for a location</p>
-                    <p className="text-xs sm:text-sm mt-2 text-center">We need your location to show you the weather</p>
-                  </motion.div>
-                </section>
-              ) : isLoading ? (
+              {isLoading ? (
                 <LoadingCard />
               ) : weather && !isError ? (
                 <div className="grid lg:grid-cols-12 gap-3 sm:gap-4">

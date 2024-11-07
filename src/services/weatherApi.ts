@@ -33,21 +33,9 @@ export interface WeatherData {
 }
 
 export const fetchWeatherData = async (city: string): Promise<WeatherData> => {
-  const response = await fetch(`/api/weather?city=${encodeURIComponent(city)}`);
+  const response = await fetch(`http://localhost:5000/api/weather/${encodeURIComponent(city)}`);
   if (!response.ok) {
     throw new Error('Failed to fetch weather data');
   }
   return response.json();
 };
-
-export const getCityFromCoords = async (latitude: number, longitude: number): Promise<string> => {
-  const response = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`);
-  if (!response.ok) {
-    throw new Error('Failed to get city name from coordinates');
-  }
-  const data = await response.json();
-  if (!data.city) {
-    throw new Error('No city found for these coordinates');
-  }
-  return data.city;
-}
