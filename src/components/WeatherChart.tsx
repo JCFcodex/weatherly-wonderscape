@@ -1,12 +1,13 @@
 import { Card } from "@/components/ui/card";
 import { Line, LineChart, ResponsiveContainer, XAxis, YAxis, Tooltip } from "recharts";
 import { motion } from "framer-motion";
+import { memo } from "react";
 
 interface WeatherChartProps {
   forecast: any;
 }
 
-export const WeatherChart = ({ forecast }: WeatherChartProps) => {
+export const WeatherChart = memo(({ forecast }: WeatherChartProps) => {
   const data = forecast.forecastday[0].hour.map((hour: any) => ({
     time: new Date(hour.time).getHours(),
     temp: Math.round(hour.temp_c),
@@ -33,7 +34,10 @@ export const WeatherChart = ({ forecast }: WeatherChartProps) => {
           
           <div className="h-[200px] sm:h-[300px]">
             <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={data} margin={{ top: 5, right: 10, left: -20, bottom: 5 }}>
+              <LineChart 
+                data={data.slice(0, 12)} 
+                margin={{ top: 5, right: 10, left: -20, bottom: 5 }}
+              >
                 <defs>
                   <linearGradient id="tempLine" x1="0" y1="0" x2="0" y2="1">
                     <stop offset="0%" stopColor="#FFB200" stopOpacity={1} />
@@ -74,11 +78,10 @@ export const WeatherChart = ({ forecast }: WeatherChartProps) => {
                   stroke="url(#tempLine)"
                   strokeWidth={3}
                   dot={false}
-                  animationDuration={2000}
+                  animationDuration={1000}
                   animationBegin={0}
-                  animationEasing="ease-in-out"
+                  animationEasing="ease-out"
                   strokeLinecap="round"
-                  filter="drop-shadow(0px 2px 4px rgba(255, 178, 0, 0.3))"
                 />
               </LineChart>
             </ResponsiveContainer>
@@ -87,4 +90,6 @@ export const WeatherChart = ({ forecast }: WeatherChartProps) => {
       </Card>
     </motion.div>
   );
-};
+});
+
+WeatherChart.displayName = 'WeatherChart';

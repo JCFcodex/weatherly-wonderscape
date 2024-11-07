@@ -4,7 +4,33 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ForeCastify - Real-time Weather Updates & Accurate Weather Forecasts</title>
-  <link rel="icon" type="image/svg+xml" href="/src/assets/forecastify-logo.png" />
+  
+  <!-- Resource Hints -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  
+  <!-- Critical CSS -->
+  <style>
+    /* Add loading spinner styles */
+    .loading-spinner {
+      width: 50px;
+      height: 50px;
+      border: 3px solid #f3f3f3;
+      border-top: 3px solid #6B85FF;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+
+  <link rel="icon" type="image/webp" href="/src/assets/forecastify-logo.webp" />
   <meta name="description" content="Get accurate real-time weather updates, hourly forecasts, and weekly weather predictions for any location worldwide. Features detailed temperature trends, wind speed monitoring, humidity levels, and air quality index tracking." />
   <meta name="keywords" content="weather forecast, real-time weather, temperature, humidity, wind speed, air quality, weather dashboard, weather app, weather prediction, local weather, global weather, weather alerts, weather monitoring" />
   <meta name="author" content="ForeCastify" />
@@ -15,14 +41,14 @@
   <meta property="og:url" content="https://forecastify.com/" />
   <meta property="og:title" content="ForeCastify - Real-time Weather Updates & Accurate Weather Forecasts" />
   <meta property="og:description" content="Get accurate real-time weather updates, hourly forecasts, and weekly weather predictions for any location worldwide." />
-  <meta property="og:image" content="/og-image.svg" />
+  <meta property="og:image" content="/og-image.webp" />
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:url" content="https://forecastify.com/" />
   <meta name="twitter:title" content="ForeCastify - Real-time Weather Updates" />
   <meta name="twitter:description" content="Get accurate real-time weather updates, hourly forecasts, and weekly weather predictions for any location worldwide." />
-  <meta name="twitter:image" content="/og-image.svg" />
+  <meta name="twitter:image" content="/og-image.webp" />
 
   <!-- Theme Color -->
   <meta name="theme-color" content="#1C1C1E" />
@@ -30,8 +56,11 @@
   <!-- Canonical URL -->
   <link rel="canonical" href="https://forecastify.com" />
   
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <!-- Fonts - Load asynchronously -->
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+  
+  <!-- Preload critical assets -->
+  <link rel="preload" as="image" href="/src/assets/forecastify-logo.webp" />
 
   <!-- JSON-LD Structured Data -->
   <script type="application/ld+json">
@@ -58,8 +87,16 @@
 </head>
 
 <body>
+  <!-- Loading spinner -->
+  <div id="loading-spinner" class="loading-spinner"></div>
   <div id="root"></div>
+  <script>
+    // Remove loading spinner when content is loaded
+    window.addEventListener('load', function() {
+      document.getElementById('loading-spinner').style.display = 'none';
+    });
+  </script>
   <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
-  <script type="module" src="/src/main.tsx"></script>
+  <script type="module" src="/src/main.tsx" async></script>
 </body>
 </html>
