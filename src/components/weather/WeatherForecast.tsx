@@ -7,6 +7,9 @@ interface WeatherForecastProps {
 }
 
 export const WeatherForecast = ({ forecast }: WeatherForecastProps) => {
+  console.log('Forecast data:', forecast);
+  console.log('Number of forecast days:', forecast.forecastday.length);
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -16,7 +19,8 @@ export const WeatherForecast = ({ forecast }: WeatherForecastProps) => {
     >
       <Card className="w-full p-4 sm:p-6 bg-[#2C2C2E]/80 backdrop-blur-xl rounded-3xl border-0">
         <div className="space-y-3">
-          <p className="text-white/50 text-sm">7-day forecast</p>
+          <p className="text-white/50 text-sm">{forecast.forecastday.length}-day forecast</p>
+
           {forecast.forecastday.map((day: any, index: number) => (
             <motion.div
               key={day.date}

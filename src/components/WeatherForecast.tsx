@@ -16,7 +16,7 @@ export const WeatherForecast = ({ forecast }: WeatherForecastProps) => {
     >
       <Card className="w-full p-4 sm:p-6 bg-[#2C2C2E]/80 backdrop-blur-xl rounded-3xl border-0">
         <div className="space-y-3">
-          <p className="text-white/50 text-sm">7-day forecast</p>
+          <p className="text-white/50 text-sm">{forecast.forecastday.length}-day forecast</p>
           {forecast.forecastday.map((day: any, index: number) => (
             <motion.div
               key={day.date}
