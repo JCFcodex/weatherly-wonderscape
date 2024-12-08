@@ -24,9 +24,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-uud)m^i)fqob42&o32tx*dyh!^6cu5_m+98m#1$q!wmf&dts0z"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['forecastifytoday.onrender.com', 'localhost', '127.0.0.1']
 
 
 # Application definition
@@ -124,7 +124,12 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # CORS settings
-CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOWED_ORIGINS = [
+    'https://forecastifytoday.onrender.com',
+    'http://localhost:5173',
+    'http://127.0.0.1:5173',
+]
+
 CORS_ALLOW_CREDENTIALS = True
 
 # React build directory
